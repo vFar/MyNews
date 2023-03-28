@@ -1,0 +1,3 @@
+pip install newsapi
+pip install tk
+pip install pyqt5
