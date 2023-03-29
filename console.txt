@@ -1,4 +1,5 @@
 pip install newsapi
 pip install PyQt5
 pip install tk
-pip install 
+pip install pyinstaller
+pip install pillow
