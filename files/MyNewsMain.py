@@ -1,10 +1,7 @@
 from tkinter import *
 from PIL import Image,ImageTk
 
-from createWindow import center, createWindowTk
-from contents import buttons
+from createWindow import myNews
 
-window =createWindowTk()
-buttons()
-center(window)
-window.mainloop()
+myNews()
+

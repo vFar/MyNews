@@ -1,5 +1,8 @@
 from tkinter import *
 from PIL import Image,ImageTk
+
+window = None
+body = None
 def center(win):
     win.update_idletasks()
     width = win.winfo_width()
@@ -13,21 +16,27 @@ def center(win):
     win.geometry('{}x{}+{}+{}'.format(width, height, x, y))
     win.deiconify()
     
-def createWindowTk():
+def myNews():
     window = Tk()
     window.title("Tests")
-    # Add image file
-    # Add image file
-    window.geometry(f'{1280}x{720}+{1}+{1}')
-    # Create Canvas
-    canvas1 = Canvas( window, width = 1280,
-                    height = 720)
     
-    canvas1.pack(fill= "both", expand = False)
+    window.minsize(1280,720)
+    window.maxsize(1600,900)
+    # Add image file
+    # Add image file
+    window.geometry(f'{1600}x{900}+{1}+{1}')
+
+    body = Frame(window,bg="blue", width = 1600,
+                    height = 900)
+    body.grid_propagate(False)
+    
+    body.grid(columnspan=15, rowspan=5)
     
     # Display image
-    canvas1.create_image( 0, 0, 
-                        anchor = "nw")
-
-    return window
+    
+    from contents import navbar, logo
+    navbar.grid(row=0,columnspan=15, sticky=N)
+    logo.grid(row=0, column=0, sticky=NW)
+    center(window)
+    window.mainloop()
     
