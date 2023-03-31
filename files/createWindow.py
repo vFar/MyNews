@@ -3,6 +3,7 @@ from PIL import Image,ImageTk
 
 window = None
 body = None
+content = None
 def center(win):
     win.update_idletasks()
     width = win.winfo_width()
@@ -31,12 +32,17 @@ def myNews():
     body.grid_propagate(False)
     
     body.grid(columnspan=15, rowspan=5)
+    body.rowconfigure(0, weight=1)
+    body.columnconfigure(0, weight=1)
+    content = Frame(body, width=1600, height=900)
+    content.grid_propagate(False)
+    content.grid(row=1, columnspan=15, rowspan=4)
     
-    # Display image
-    
-    from contents import navbar, logo
-    navbar.grid(row=0,columnspan=15, sticky=N)
-    logo.grid(row=0, column=0, sticky=NW)
+    from contents import navbar, logo, conet
+    navbar.grid(row=0,columnspan=15, rowspan=1, sticky=N)
+    logo.grid(row=0, column=1, sticky=NW, pady=15)
+    logo.grid(row=0, column=2, pady=15,sticky='nsew')
+    conet.grid(row=0, column=1)
     center(window)
     window.mainloop()
     
