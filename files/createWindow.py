@@ -30,9 +30,17 @@ def myNews():
 
     
     
-    from contents import navbar, logo, conet, content
+    from contents import navbar, logo, conet, content, categories
     navbar.place(x=0, y=0)
     logo.place(x=15, y=15)
+
+    distance=100
+    counter=0
+    for category in categories:
+        category.place(x=distance, y = 15)
+        distance=distance+100
+        counter=counter+1
+        
 
     content.place(x=0, y=50)
     conet.place(x=25, y=25)
