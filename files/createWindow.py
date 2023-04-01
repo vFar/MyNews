@@ -21,28 +21,23 @@ def myNews():
     window = Tk()
     window.title("Tests")
     
+    window.configure(bg="light blue")
     window.minsize(1280,720)
     window.maxsize(1600,900)
     # Add image file
     # Add image file
     window.geometry(f'{1600}x{900}+{1}+{1}')
 
-    body = Frame(window,bg="blue", width = 1600,
-                    height = 900)
-    body.grid_propagate(False)
     
-    body.grid(columnspan=15, rowspan=5)
-    body.rowconfigure(0, weight=1)
-    body.columnconfigure(0, weight=1)
-    content = Frame(body, width=1600, height=900)
-    content.grid_propagate(False)
-    content.grid(row=1, columnspan=15, rowspan=4)
     
-    from contents import navbar, logo, conet
-    navbar.grid(row=0,columnspan=15, rowspan=1, sticky=N)
-    logo.grid(row=0, column=1, sticky=NW, pady=15)
-    logo.grid(row=0, column=2, pady=15,sticky='nsew')
-    conet.grid(row=0, column=1)
+    from contents import navbar, logo, conet, content
+    navbar.place(x=0, y=0)
+    logo.place(x=15, y=15)
+
+    content.place(x=0, y=50)
+    conet.place(x=25, y=25)
+
+
     center(window)
     window.mainloop()
     
