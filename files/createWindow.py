@@ -21,28 +21,31 @@ def myNews():
     window = Tk()
     window.title("Tests")
     
-    window.configure(bg="light blue")
+    
     window.minsize(1280,720)
     window.maxsize(1600,900)
     # Add image file
     # Add image file
-    window.geometry(f'{1600}x{900}+{1}+{1}')
-
+    window.geometry('1600x900')
+    window.configure(bg="black")
     
     
-    from contents import navbar, logo, conet, content, categories
+    from contents import navbar, logo, conet, content, categories, article
     navbar.place(x=0, y=0)
-    logo.place(x=15, y=15)
+    logo.place(x=5, y=15)
 
-    distance=100
+    distance=70
     counter=0
     for category in categories:
-        category.place(x=distance, y = 15)
-        distance=distance+100
-        counter=counter+1
-        
-
+        if len(category.cget("text")) <=7:
+            distance=distance+70
+            category.place(x=distance, y = 15)
+        elif len(category.cget("text")) >=8:
+            distance=distance+80
+            category.place(x=distance, y = 15)
+            
     content.place(x=0, y=50)
+    article.place(relx=0.5, rely=0.2, anchor=CENTER)
     conet.place(x=25, y=25)
 
 
