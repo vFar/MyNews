@@ -31,7 +31,7 @@ def myNews():
     root.configure(bg="white")
 
     from contents import navbar, logo, content, categories, articles, titles
-    navbar.pack(anchor=N)
+    navbar.pack(anchor=N, fill="both")
     logo.grid(column=0, row=0, pady=10, padx=50)
 
     distance = 0.05
