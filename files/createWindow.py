@@ -30,7 +30,7 @@ def myNews():
     window.configure(bg="black")
     
     
-    from contents import navbar, logo, conet, content, categories, article
+    from contents import navbar, logo, content, categories, articles, titles
     navbar.place(x=0, y=0)
     logo.place(x=5, y=15)
 
@@ -45,9 +45,17 @@ def myNews():
             category.place(x=distance, y = 15)
             
     content.place(x=0, y=50)
-    article.place(relx=0.5, rely=0.2, anchor=CENTER)
-    conet.place(x=25, y=25)
+    articles[0].place(relx=0.5, rely=0.15, anchor=CENTER)
+    titles[0].place(x=25, y=25)
 
+    articles[1].place(relx=0.5, rely=0.7, anchor=CENTER)
+    titles[1].place(x=25, y=25)
+
+    """for article in articles:
+        article.place(relx=0.5, rely=0.2+0.1, anchor=CENTER)
+        titles[counter].place(x=25, y=25)
+        counter=counter+1"""
+   
 
     center(window)
     window.mainloop()

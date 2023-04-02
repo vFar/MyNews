@@ -1,5 +1,6 @@
 from tkinter import *
 from PIL import Image,ImageTk
+import random
 
 from createWindow import window
 
@@ -15,9 +16,15 @@ categories=[Label(navbar, text="Sports"),
                Label(navbar, text="Veselība"),
                Label(navbar, text="Sabiedrība"),
                Label(navbar, text="Ēdiens")]
-
 content = Frame(window, width=1600, height=1000)
-article = Frame(content, width=1000, height=200, bg="white")
-conet = Label(article, text="Šīs ir lielas ziņas, tests, tests")
+titles= []
+articles = []
+for i in range(0,5):
+    print(0)
+    articles.insert(i,(Frame(content, width=1000, height=300, bg="black")))
+    titles.insert(i,(Label(articles[i], text=random.randint(1,100))))
+
+
+
     
 
