@@ -5,7 +5,10 @@ root = None
 body = None
 content = None
 cWindow = None
+article1 = 0
+article2 = 1
 
+ 
 def center(win):
     win.update_idletasks()
     width = win.winfo_width()
@@ -30,7 +33,7 @@ def myNews():
     root.geometry('1280x720')
     root.configure(bg="white")
 
-    from contents import navbar, logo, content, categories, articles, titles
+    from contents import navbar, logo, content, categories, articles, titles, loadArticles, nextArticles
     navbar.pack(anchor=N, fill="both")
     logo.grid(column=0, row=0, pady=10, padx=50)
 
@@ -44,17 +47,17 @@ def myNews():
         counter = counter + 1
 
     content.place(x=0, y=50)
-    articles[0].pack(pady=100)
-    titles[0].place(x=25, y=25)
+    loadArticles(article1, article2)
 
-    articles[1].pack(pady=50)
-    titles[1].place(x=25, y=25)
+    nextBtn=Button(root, text="Nākošais")
+    nextBtn.place(x=50, y=200)
 
-    counter = 0
-    for article in articles:
-        article.pack(pady=50)
-        titles[counter].place(x=25, y=25)
-        counter = counter + 1
+    if nextBtn:
+        article1=article1+2
+        article2=article2+2
+        loadArticles(article1, article2)
+
+
 
 
     center(root)
