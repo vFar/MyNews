@@ -30,7 +30,7 @@ def myNews():
     root.title("Tests")
 
     root.minsize(1280, 720)
-    root.maxsize(1600, 5000)
+    root.maxsize(1600, 900)
     root.geometry('1280x720')
     root.configure(bg="white")
 
@@ -52,13 +52,14 @@ def myNews():
 
     def nextArticles():
         global article1, article2
-        if article1<=13 and article2<=14:
+        if article1<=12 and article2<=13:
             article1=article1+2
             article2=article2+2
             print(f"{article1} next")
             loadArticles(article1, article2)
         else:
-            print("cannot front")
+            article1=0
+            article2=1
 
     def backArticles():
         global article1, article2
@@ -72,10 +73,10 @@ def myNews():
             print("cannot back")
 
     nextBtn=Button(root, text="Nākošais", command=lambda: nextArticles())
-    nextBtn.place(x=1200, y=200)
+    nextBtn.place(x=1200, y=600)
 
     backBtn=Button(root, text="Iepriekšējais", command=lambda: backArticles())
-    backBtn.place(x=50, y=200)
+    backBtn.place(x=50, y=600)
 
 
 

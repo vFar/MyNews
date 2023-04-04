@@ -22,7 +22,7 @@ titles= []
 articles = []
 for i in range(0,15):
     print(0)
-    articles.insert(i,(Frame(root, width=1000, height=300, bg="black")))
+    articles.insert(i,(Frame(root, width=1000, height=250, bg="black")))
     titles.insert(i,(Label(articles[i], text=i)))
 
 def loadArticles(article1, article2):
@@ -37,14 +37,3 @@ def loadArticles(article1, article2):
   articles[article2].pack(pady=30)
   titles[article2].place(x=25, y=25)
   
-
-
-
-  
-
-
-
-
-
-    
-
