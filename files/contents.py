@@ -5,7 +5,7 @@ import random
 from createWindow import root
 
 
-
+global ar1, art2
 navbar = Frame(root, bg='yellow', height=50, width=1600)
      
 logo = Label(navbar, text="MyNews", bg="Yellow")
@@ -20,22 +20,27 @@ content = Frame(root, width=1280, height=1000, padx=1600, bg="white")
 
 titles= []
 articles = []
-for i in range(0,5):
+for i in range(0,15):
     print(0)
     articles.insert(i,(Frame(root, width=1000, height=300, bg="black")))
     titles.insert(i,(Label(articles[i], text=i)))
 
 def loadArticles(article1, article2):
+  print(f"{article1} load")
+
+  for i in range(0, 15):
+    articles[i].pack_forget()
+
   articles[article1].pack(pady=30)
   titles[article1].place(x=25, y=25)
+
   articles[article2].pack(pady=30)
   titles[article2].place(x=25, y=25)
+  
 
-    
-def nextArticles(article1, article2):
-    art1=article1+2
-    art2=article2+2
-    return art1, art2
+
+
+  
 
 
 

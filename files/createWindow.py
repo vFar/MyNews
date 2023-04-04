@@ -5,9 +5,9 @@ root = None
 body = None
 content = None
 cWindow = None
+global article1, article2
 article1 = 0
 article2 = 1
-
  
 def center(win):
     win.update_idletasks()
@@ -23,7 +23,8 @@ def center(win):
     win.deiconify()
 
 def myNews():
-    global root, content
+    global root, content, article1, article2
+    
 
     root = Tk()
     root.title("Tests")
@@ -33,7 +34,7 @@ def myNews():
     root.geometry('1280x720')
     root.configure(bg="white")
 
-    from contents import navbar, logo, content, categories, articles, titles, loadArticles, nextArticles
+    from contents import navbar, logo, content, categories, articles, titles, loadArticles
     navbar.pack(anchor=N, fill="both")
     logo.grid(column=0, row=0, pady=10, padx=50)
 
@@ -49,16 +50,37 @@ def myNews():
     content.place(x=0, y=50)
     loadArticles(article1, article2)
 
-    nextBtn=Button(root, text="Nākošais")
-    nextBtn.place(x=50, y=200)
+    def nextArticles():
+        global article1, article2
+        if article1<=13 and article2<=14:
+            article1=article1+2
+            article2=article2+2
+            print(f"{article1} next")
+            loadArticles(article1, article2)
+        else:
+            print("cannot front")
 
-    if nextBtn:
-        article1=article1+2
-        article2=article2+2
-        loadArticles(article1, article2)
+    def backArticles():
+        global article1, article2
+        if article1 >= 1 and article2 >=2:
+
+            article1=article1-2
+            article2=article2-2
+            print(f"{article1} next")
+            loadArticles(article1, article2)
+        else:
+            print("cannot back")
+
+    nextBtn=Button(root, text="Nākošais", command=lambda: nextArticles())
+    nextBtn.place(x=1200, y=200)
+
+    backBtn=Button(root, text="Iepriekšējais", command=lambda: backArticles())
+    backBtn.place(x=50, y=200)
 
 
 
 
     center(root)
     root.mainloop()
+
+    print(article1)
