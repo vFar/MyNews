@@ -1,6 +1,6 @@
 from tkinter import *
 from PIL import Image,ImageTk
-import random
+import random, webbrowser
 from newsapi import NewsApiClient
 apikey = "8451a189a10f47e3a7b4f02d6624be3f"
 newsapi = NewsApiClient(api_key = apikey)
@@ -12,8 +12,11 @@ var3 = IntVar()
 var4 = IntVar()
 
 bCategories=["business", "entertainment", "General", "health", "science", "sports", "technology"]
-navbar = Frame(root, bg='yellow', height=50, width=1600)
-logo = Label(navbar, text="MyNews", bg="Yellow")
+navbar1 = Frame(root, bg='#2671eb', height=200, width=1920)
+navbar2 = Frame(root, bg='#205fc7', height=50, width=1920)
+
+logo = Label(navbar1, text="M   y   N   e   w   s", font=('Calibri', 28, 'bold'), bg='#174796', fg='white', pady=15, padx=200)
+slogan = Label(navbar1, text="Tiec informēts ar MyNews!", font=('Calibri', 14, 'italic'), bg='#205fc7', fg='#fcfcfc', pady=10, padx=120)
 
 def filterArticles(dpIndex):
     for index, other_button in enumerate(categories):
@@ -77,7 +80,7 @@ def loadArticles(article1, article2):
   descriptions[article2].place(x=25, y=50)
          
 
-content = Frame(root, width=1280, height=1000, padx=1600, bg="white")
+content = Frame(root, width=1920, height=1000, padx=1920, bg="white")
 sub_categories=[[Checkbutton(dropdown, text="Finanses", variable=var1), Checkbutton(dropdown, text="Marketings", variable=var2), Checkbutton(dropdown, text="Menedžments",variable=var3), Checkbutton(dropdown, text="E-komercija", variable=var4)],
                 [Checkbutton(dropdown, text="Filmas", variable=var1), Checkbutton(dropdown, text="Mūzika", variable=var2), Checkbutton(dropdown, text="Notikumi", variable=var3), Checkbutton(dropdown, text="Spēles", variable=var4)],
                 [Checkbutton(dropdown, text="Laikapstākļi", variable=var1), Checkbutton(dropdown, text="Politika", variable=var2), Checkbutton(dropdown, text="Dzīvesstils", variable=var3), Checkbutton(dropdown, text="Izglītība", variable=var4)],
@@ -97,6 +100,9 @@ articles = []
 descriptions=[]
 urls=[]
 
+def open_link(url):
+    webbrowser.open_new(url)
+
 homeData=newsapi.get_everything(q="ukraine",
                                 sources='bbc-news, the-verge',
                                 from_param='2023-03-15',
@@ -110,10 +116,12 @@ print(homeartLen)
 
 
 for  i, article in enumerate(homeart):
-    print(0)
-    articles.insert(i,(Frame(root, width=1000, height=250, bg="black")))
-    titles.insert(i,(Label(articles[i], text=article["title"])))
-    descriptions.insert(i,(Label(articles[i], text=article["description"])))
     urls.insert(i,article["description"])
+    articles.insert(i,(Frame(root, width=1000, height=250, bg="#205fc7", cursor="hand2")))
+    articles[i].bind("<Button-1>", lambda e, url=urls[i]: open_link(url))
+    titles.insert(i,(Label(articles[i], justify="left", wraplength=970, font=('Calibri', 14, "underline"), bg="#205fc7", fg="white",text=article["title"])))
+    titles[i].bind("<Button-1>", lambda e, url=urls[i]: open_link(url))
+    descriptions.insert(i,(Label(articles[i], text=article["description"])))
+    
 
   
