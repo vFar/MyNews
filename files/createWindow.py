@@ -5,9 +5,14 @@ root = None
 body = None
 content = None
 cWindow = None
-global article1, article2
+global article1, article2, categories, toggleDropdown
 article1 = 0
 article2 = 1
+toggleDropdown = False
+dropdownIndex = None
+categories = []
+bCategories = []
+
  
 def center(win):
     win.update_idletasks()
@@ -22,22 +27,129 @@ def center(win):
     win.geometry('{}x{}+{}+{}'.format(width, height, x, y))
     win.deiconify()
 
+    
+
 def myNews():
-    global root, content, article1, article2
+    global root, content, article1, article2, categories, dropdown
     
 
     root = Tk()
     root.title("Tests")
-
+    dropdown=Frame(root, width=700, height=700, bg="purple")
     root.minsize(1280, 720)
     root.maxsize(1600, 900)
     root.geometry('1280x720')
     root.configure(bg="white")
 
-    from contents import navbar, logo, content, categories, articles, titles, loadArticles
+    from contents import navbar, logo, content, loadArticles, sub_categories, filterArticles, homeartLen
+    
+
+    def showDropdown(cat):
+        global dropdown, toggleDropdown, dropdownIndex
+        if toggleDropdown == False:
+            dropdownIndex=cat
+            match cat:
+                case 0:
+                    toggleDropdown=True
+                    dropdown.place(x=50, y=60)
+                    dropdown.lift()
+                    for index, other_button in enumerate(categories):
+                        print(index)
+                        if index != cat:
+                            other_button.config(state=DISABLED)
+                    
+                    for i in range(0,4):
+                        sub_categories[cat][i].grid(column=i, row=0, pady=10, padx=5)
+                case 1:
+                    toggleDropdown=True
+                    dropdown.place(x=100, y=60)
+                    dropdown.lift()
+                    for index, other_button in enumerate(categories):
+                        print(index)
+                        if index != cat:
+                            other_button.config(state=DISABLED)
+                    
+                    for i in range(0,4):
+                        sub_categories[cat][i].grid(column=i, row=0, pady=10, padx=5)
+                case 2:
+                    toggleDropdown=True
+                    dropdown.place(x=100, y=60)
+                    dropdown.lift()
+                    for index, other_button in enumerate(categories):
+                        print(index)
+                        if index != cat:
+                            other_button.config(state=DISABLED)
+                    
+                    for i in range(0,4):
+                        sub_categories[cat][i].grid(column=i, row=0, pady=10, padx=5)
+                case 3:
+                    toggleDropdown=True
+                    dropdown.place(x=100, y=60)
+                    dropdown.lift()
+                    for index, other_button in enumerate(categories):
+                        print(index)
+                        if index != cat:
+                            other_button.config(state=DISABLED)
+                    
+                    for i in range(0,4):
+                        sub_categories[cat][i].grid(column=i, row=0, pady=10, padx=5)
+                case 4:
+                    toggleDropdown=True
+                    dropdown.place(x=100, y=60)
+                    dropdown.lift()
+                    for index, other_button in enumerate(categories):
+                        print(index)
+                        if index != cat:
+                            other_button.config(state=DISABLED)
+                    
+                    for i in range(0,4):
+                        sub_categories[cat][i].grid(column=i, row=0, pady=10, padx=5)
+                case 5:
+                    toggleDropdown=True
+                    dropdown.place(x=100, y=60)
+                    dropdown.lift()
+                    for index, other_button in enumerate(categories):
+                        print(index)
+                        if index != cat:
+                            other_button.config(state=DISABLED)
+                    
+                    for i in range(0,4):
+                        sub_categories[cat][i].grid(column=i, row=0, pady=10, padx=5)
+                case 6:
+                    toggleDropdown=True
+                    dropdown.place(x=100, y=60)
+                    dropdown.lift()
+                    for index, other_button in enumerate(categories):
+                        print(index)
+                        if index != cat:
+                            other_button.config(state=DISABLED)
+                    
+                    for i in range(0,4):
+                        sub_categories[cat][i].grid(column=i, row=0, pady=10, padx=5)
+        else:
+            dropdownIndex = None
+            for index, other_button in enumerate(categories):
+                        print(index)
+                        if index != cat:
+                            other_button.config(state=NORMAL)
+            for i in range(0,4):
+                    sub_categories[cat][i].grid_forget()
+            dropdown.place_forget()
+            toggleDropdown=False
+        print(dropdownIndex)
+
     navbar.pack(anchor=N, fill="both")
     logo.grid(column=0, row=0, pady=10, padx=50)
 
+    categories=[Button(navbar, text="Bizness", bg="yellow", font=("black"), command=lambda:showDropdown(0)),
+             Button(navbar, text="Izklaide", bg="yellow", font=("black"), command=lambda:showDropdown(1)),
+               Button(navbar, text="Vispārīgi", bg="yellow", font=("black"), command=lambda:showDropdown(2)),
+               Button(navbar, text="Veselība", bg="yellow", font=("black"), command=lambda:showDropdown(3)),
+               Button(navbar, text="Zinātne", bg="yellow", font=("black"), command=lambda:showDropdown(4)),
+               Button(navbar, text="Sports", bg="yellow", font=("black"), command=lambda:showDropdown(5)),
+              Button(navbar, text="Tehnoloģijas", bg="yellow", font=("black"), command=lambda:showDropdown(6))]
+    
+   
     counter = 1
     for category in categories:
         if len(categories) == counter:
@@ -48,10 +160,9 @@ def myNews():
 
     content.place(x=0, y=50)
     loadArticles(article1, article2)
-
     def nextArticles():
         global article1, article2
-        if article1<=12 and article2<=13:
+        if article1<=homeartLen-2 and article2<=homeartLen-1:
             article1=article1+2
             article2=article2+2
             print(f"{article1} next")
@@ -76,6 +187,9 @@ def myNews():
 
     backBtn=Button(root, text="Iepriekšējais", command=lambda: backArticles())
     backBtn.place(x=50, y=600)
+
+    filterBtn = Button(root, text="Filtrēt", bg="red", command=lambda: filterArticles(dropdownIndex))
+    filterBtn.place(x=1200, y=40)
 
 
 
