@@ -38,7 +38,6 @@ def myNews():
     navbar.pack(anchor=N, fill="both")
     logo.grid(column=0, row=0, pady=10, padx=50)
 
-    distance = 0.05
     counter = 1
     for category in categories:
         if len(categories) == counter:
