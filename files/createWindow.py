@@ -41,7 +41,7 @@ def myNews():
 
     dropdown = Frame(root, width=700, height=700, bg="#205fc7")
     root.minsize(1280, 720)
-    root.maxsize(1600, 900)
+    root.maxsize(1920, 1080)
     root.geometry('1280x720')
     root.configure(bg="white")
 
@@ -82,7 +82,7 @@ def myNews():
                         sub_categories[cat][i].grid(column=0, row=i, pady=10, padx=5)
                 case 2:
                     toggleDropdown=True
-                    dropdown.place(x=100, y=60)
+                    dropdown.place(x=445, y=250)
                     dropdown.lift()
                     for index, other_button in enumerate(categories):
                         print(index)
@@ -90,7 +90,7 @@ def myNews():
                             other_button.config(state=DISABLED)
                     
                     for i in range(0,4):
-                        sub_categories[cat][i].grid(column=i, row=0, pady=10, padx=5)
+                        sub_categories[cat][i].grid(column=0, row=i, pady=10, padx=5)
                 case 3:
                     toggleDropdown=True
                     dropdown.place(x=575, y=250)

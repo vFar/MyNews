@@ -71,13 +71,13 @@ def loadArticles(article1, article2):
   for  i, article in enumerate(homeart):
     articles[i].pack_forget()
 
-  articles[article1].pack(pady=30)
+  articles[article1].pack(pady=84)
   titles[article1].place(x=25, y=25)
-  descriptions[article1].place(x=25, y=50)
+  descriptions[article1].place(x=25, y=70)
 
   articles[article2].pack(pady=30)
   titles[article2].place(x=25, y=25)
-  descriptions[article2].place(x=25, y=50)
+  descriptions[article2].place(x=25, y=70)
          
 
 content = Frame(root, width=1920, height=1000, padx=1920, bg="white")
@@ -116,12 +116,12 @@ print(homeartLen)
 
 
 for  i, article in enumerate(homeart):
-    urls.insert(i,article["description"])
+    urls.insert(i,article["url"])
     articles.insert(i,(Frame(root, width=1000, height=250, bg="#205fc7", cursor="hand2")))
     articles[i].bind("<Button-1>", lambda e, url=urls[i]: open_link(url))
     titles.insert(i,(Label(articles[i], justify="left", wraplength=970, font=('Calibri', 14, "underline"), bg="#205fc7", fg="white",text=article["title"])))
     titles[i].bind("<Button-1>", lambda e, url=urls[i]: open_link(url))
-    descriptions.insert(i,(Label(articles[i], text=article["description"])))
+    descriptions.insert(i,(Label(articles[i], justify="left", wraplength=970, font=('Calibri', 13), bg="#205fc7", fg="white", text=article["description"])))
     
 
   
