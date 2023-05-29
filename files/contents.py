@@ -1,9 +1,11 @@
 from tkinter import *
 from PIL import Image,ImageTk
 import random, webbrowser
+from datetime import *
 from newsapi import NewsApiClient
 apikey = "8451a189a10f47e3a7b4f02d6624be3f"
 newsapi = NewsApiClient(api_key = apikey)
+global homeartLen
 
 from createWindow import root, dropdown, toggleDropdown,categories
 var1 = IntVar()
@@ -103,19 +105,24 @@ urls=[]
 def open_link(url):
     webbrowser.open_new(url)
 
-homeData=newsapi.get_everything(q="ukraine",
+def randomArticle():
+  global homeartLen, homeart
+  last_month = datetime.now() - timedelta(days=30).strftime("%Y-%m-%d") # Subtract 30 days to get the last month's date
+  firstRand=random.randint(0,6)
+  lastRand=random.randint(0,4)
+  homeData=newsapi.get_everything(q=bSub_categories[firstRand][lastRand],
                                 sources='bbc-news, the-verge',
-                                from_param='2023-03-15',
-                                to='2023-04-05',
+                                from_param=last_month,
+                                to=datetime.now().strftime("%Y-%m-%d"),
                                 language='en',
                                 sort_by='relevancy')
 
-homeart = homeData['articles']
-homeartLen=homeData['totalResults']
-print(homeartLen)
+  homeart = homeData['articles']
+  homeartLen=homeData['totalResults']
+  print(homeartLen)
 
 
-for  i, article in enumerate(homeart):
+  for  i, article in enumerate(homeart):
     urls.insert(i,article["url"])
     articles.insert(i,(Frame(root, width=1000, height=250, bg="#205fc7", cursor="hand2")))
     articles[i].bind("<Button-1>", lambda e, url=urls[i]: open_link(url))
@@ -123,5 +130,5 @@ for  i, article in enumerate(homeart):
     titles[i].bind("<Button-1>", lambda e, url=urls[i]: open_link(url))
     descriptions.insert(i,(Label(articles[i], justify="left", wraplength=970, font=('Calibri', 13), bg="#205fc7", fg="white", text=article["description"])))
     
-
+randomArticle()
   
