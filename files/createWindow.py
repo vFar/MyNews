@@ -1,5 +1,6 @@
 from tkinter import *
 from PIL import Image, ImageTk
+import os.path
 
 root = None
 body = None
@@ -13,7 +14,13 @@ dropdownIndex = None
 categories = []
 bCategories = []
 
- 
+def checkSaved():
+    if((os.path.exists('files/savedList.txt'))==False):
+        f=open('files/savedList.txt', 'x')
+        f.write("cumsauce")
+        f.close()
+
+
 def center(win):
     win.update_idletasks()
     width = win.winfo_width()
@@ -31,7 +38,7 @@ def center(win):
 
 def myNews():
     global root, content, article1, article2, categories, dropdown
-    
+    checkSaved()
 
     root = Tk()
     root.title("MyNews | Sākuma ekrāns")
@@ -168,6 +175,9 @@ def myNews():
         navbar2.grid_columnconfigure(counter + 1, weight=1, uniform="categories")
         counter += 1 
 
+    savedList=Button(navbar2, cursor="hand2", bg='white', text="Saved", height=2, width=10, command= lambda: openSavedList())
+    savedList.grid(column=0, row=0, pady= 10, padx=10)
+
     content.place(x=0, y=500)
     loadArticles(article1, article2)
     def nextArticles():
@@ -205,13 +215,16 @@ def myNews():
             backBtn.place(x=21, y=400)
     
     def openSavedList():
-        nextBtn.place_forget()
-        backBtn.place_forget()
-        articles.pack_forget()
+        savedListBox=Frame(root, width=1280, height=720, bg="#205fc7", border=2)
+        savedListBox.place(x=0, y=200)
+        savedList.grid_forget()
+        savedExit=Button(savedListBox, cursor="hand2", bg='red', text="X", fg="white", height=2, width=10, command= lambda: [savedExit.destroy(),savedList.grid(column=0, row=0, pady= 10, padx=10), savedListBox.place_forget(), print("forgor")])
+        savedExit.place(x=25, y= 15)
+        
+        
+
 
     root.bind('<Map>', check_winstate)
-
-
 
     center(root)
     root.mainloop()

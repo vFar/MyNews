@@ -1,4 +1,5 @@
 from tkinter import *
+import datetime
 from PIL import Image,ImageTk
 import random, webbrowser
 from newsapi import NewsApiClient
@@ -6,12 +7,13 @@ apikey = "8451a189a10f47e3a7b4f02d6624be3f"
 newsapi = NewsApiClient(api_key = apikey)
 
 from createWindow import root, dropdown, toggleDropdown,categories
+global articles
 var1 = IntVar()
 var2 = IntVar()
 var3 = IntVar()
 var4 = IntVar()
 
-bCategories=["business", "entertainment", "General", "health", "science", "sports", "technology"]
+bCategories=["business", "entertainment", "general", "health", "science", "sports", "technology"]
 navbar1 = Frame(root, bg='#2671eb', height=200, width=1920)
 navbar2 = Frame(root, bg='#205fc7', height=50, width=1920)
 
@@ -103,12 +105,26 @@ urls=[]
 def open_link(url):
     webbrowser.open_new(url)
 
-homeData=newsapi.get_everything(q="ukraine",
-                                sources='bbc-news, the-verge',
-                                from_param='2023-06-01',
-                                to='2023-06-13',
-                                language='en',
-                                sort_by='relevancy')
+current_date = datetime.date.today()
+from_date = current_date - datetime.timedelta(days=29)
+to_date = current_date
+
+# Convert the date objects to strings in the required format
+from_param = from_date.strftime('%Y-%m-%d')
+to = to_date.strftime('%Y-%m-%d')
+
+catRan=random.randint(0, 6)
+print(catRan," cum")
+
+# Make the API request with the updated date range
+homeData = newsapi.get_everything(
+    q=bCategories[catRan],
+    sources='bbc-news, the-verge',
+    from_param=from_param,
+    to=to,
+    language='en',
+    sort_by='relevancy'
+)
 
 homeart = homeData['articles']
 homeartLen=homeData['totalResults']
