@@ -5,7 +5,7 @@ root = None
 body = None
 content = None
 cWindow = None
-global article1, article2, categories, toggleDropdown, dropdown
+global article1, article2, categories, toggleDropdown
 article1 = 0
 article2 = 1
 toggleDropdown = False
@@ -27,7 +27,7 @@ def center(win):
     win.geometry('{}x{}+{}+{}'.format(width, height, x, y))
     win.deiconify()
 
-from contents import navbar1,navbar2,slogan, logo, content, loadArticles, sub_categories, filterArticles, homeartLen
+    
 
 def myNews():
     global root, content, article1, article2, categories, dropdown
@@ -45,7 +45,7 @@ def myNews():
     root.geometry('1280x720')
     root.configure(bg="white")
 
-    
+    from contents import navbar1,navbar2,slogan, logo, content, loadArticles, sub_categories, filterArticles, homeartLen
     
     navbar1.pack(anchor=N, fill="both", pady=0, padx=0)
     navbar2.pack(anchor=N, fill="both", pady=0, padx=0)
