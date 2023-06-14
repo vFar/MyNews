@@ -45,7 +45,7 @@ def myNews():
     root.geometry('1280x720')
     root.configure(bg="white")
 
-    from contents import navbar1,navbar2,slogan, logo, content, loadArticles, sub_categories, filterArticles, homeartLen
+    from contents import navbar1,navbar2,slogan, logo, content, loadArticles, sub_categories, filterArticles, homeartLen, articles
     
     navbar1.pack(anchor=N, fill="both", pady=0, padx=0)
     navbar2.pack(anchor=N, fill="both", pady=0, padx=0)
@@ -203,6 +203,11 @@ def myNews():
         else:
             nextBtn.place(x=1160, y=400)
             backBtn.place(x=21, y=400)
+    
+    def openSavedList():
+        nextBtn.place_forget()
+        backBtn.place_forget()
+        articles.pack_forget()
 
     root.bind('<Map>', check_winstate)
 
