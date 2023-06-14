@@ -105,8 +105,8 @@ def open_link(url):
 
 homeData=newsapi.get_everything(q="ukraine",
                                 sources='bbc-news, the-verge',
-                                from_param='2023-03-15',
-                                to='2023-04-05',
+                                from_param='2023-06-01',
+                                to='2023-06-13',
                                 language='en',
                                 sort_by='relevancy')
 
