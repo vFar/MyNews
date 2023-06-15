@@ -14,12 +14,6 @@ dropdownIndex = None
 categories = []
 bCategories = []
 
-def checkSaved():
-    if((os.path.exists('files/savedList.txt'))==False):
-        f=open('files/savedList.txt', 'x')
-        f.write("cumsauce")
-        f.close()
-
 
 def center(win):
     win.update_idletasks()
@@ -38,7 +32,7 @@ def center(win):
 
 def myNews():
     global root, content, article1, article2, categories, dropdown
-    checkSaved()
+   
 
     root = Tk()
     root.title("MyNews | Sākuma ekrāns")
@@ -52,11 +46,11 @@ def myNews():
     root.geometry('1280x720')
     root.configure(bg="white")
 
-    from contents import navbar1,navbar2,slogan, logo, content, loadArticles, sub_categories, filterArticles, homeartLen, articles
+    from contents import navbar1,navbar2,slogan, logo, content, loadArticles, sub_categories, filterArticles, homeartLen, articles, checkSavedTxt
     
     navbar1.pack(anchor=N, fill="both", pady=0, padx=0)
     navbar2.pack(anchor=N, fill="both", pady=0, padx=0)
-
+    checkSavedTxt()
     logo.place(relx=0.5, rely=0.5, anchor='center')
     slogan.place(relx=0.5, rely=0.81, anchor='center')
 

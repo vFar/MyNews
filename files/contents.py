@@ -2,6 +2,7 @@ from tkinter import *
 import datetime
 from PIL import Image,ImageTk
 import random, webbrowser
+import os.path
 from newsapi import NewsApiClient
 apikey = "8451a189a10f47e3a7b4f02d6624be3f"
 newsapi = NewsApiClient(api_key = apikey)
@@ -19,6 +20,20 @@ navbar2 = Frame(root, bg='#205fc7', height=50, width=1920)
 
 logo = Label(navbar1, text="M   y   N   e   w   s", font=('Calibri', 28, 'bold'), bg='#174796', fg='white', pady=15, padx=200)
 slogan = Label(navbar1, text="Tiec informēts ar MyNews!", font=('Calibri', 14, 'italic'), bg='#205fc7', fg='#fcfcfc', pady=10, padx=120)
+savedArr=[]
+
+def checkSavedTxt():
+    file_path = 'files/savedList.txt'
+
+    if not os.path.exists(file_path):
+        with open(file_path, 'w') as file:
+            print(f"The file {file_path} was created.")
+
+    else:
+        print(f"The file {file_path} already exists.")
+
+
+
 
 def filterArticles(dpIndex):
     for index, other_button in enumerate(categories):
