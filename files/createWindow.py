@@ -1,6 +1,7 @@
 from tkinter import *
 from PIL import Image, ImageTk
 import os.path
+import ctypes
 
 root = None
 body = None
@@ -14,20 +15,24 @@ dropdownIndex = None
 categories = []
 bCategories = []
 
-def checkSaved():
-    if((os.path.exists('files/savedList.txt'))==False):
-        f=open('files/savedList.txt', 'x')
-        f.write("cumsauce")
-        f.close()
+
+#def checkSaved():
+#    if((os.path.exists('files/savedList.txt'))==False):
+#        f=open('files/savedList.txt', 'x')
+#        f.write("cumsauce")
+#        f.close()
+
+
+
 
 
 def center(win):
     win.update_idletasks()
     width = win.winfo_width()
-    frm_width = win.winfo_x()
-    win_width = width + frm_width
+    frm_width = win.winfo_rootx() - win.winfo_x()
+    win_width = width + 2 * frm_width
     height = win.winfo_height()
-    titlebar_height = win.winfo_y()
+    titlebar_height = win.winfo_rooty() - win.winfo_y()
     win_height = height + titlebar_height + frm_width
     x = win.winfo_screenwidth() // 2 - win_width // 2
     y = win.winfo_screenheight() // 2 - win_height // 2
@@ -38,10 +43,16 @@ def center(win):
 
 def myNews():
     global root, content, article1, article2, categories, dropdown
-    checkSaved()
 
     root = Tk()
     root.title("MyNews | Sākuma ekrāns")
+
+    #root.img = PhotoImage(file='images/news.png')
+    #root.iconphoto ( False, root.img)
+
+    root.iconbitmap(root, "images/news.ico")
+
+    root.resizable(0, 0)
 
     screen_width = root.winfo_screenwidth()
     screen_height = root.winfo_screenheight()
@@ -70,7 +81,6 @@ def myNews():
                     dropdown.place(x=155, y=250)
                     dropdown.lift()
                     for index, other_button in enumerate(categories):
-                        print(index)
                         if index != cat:
                             other_button.config(state=DISABLED)
                     
@@ -81,7 +91,6 @@ def myNews():
                     dropdown.place(x=310, y=250)
                     dropdown.lift()
                     for index, other_button in enumerate(categories):
-                        print(index)
                         if index != cat:
                             other_button.config(state=DISABLED)
                     
@@ -92,7 +101,6 @@ def myNews():
                     dropdown.place(x=445, y=250)
                     dropdown.lift()
                     for index, other_button in enumerate(categories):
-                        print(index)
                         if index != cat:
                             other_button.config(state=DISABLED)
                     
@@ -103,7 +111,6 @@ def myNews():
                     dropdown.place(x=575, y=250)
                     dropdown.lift()
                     for index, other_button in enumerate(categories):
-                        print(index)
                         if index != cat:
                             other_button.config(state=DISABLED)
                     
@@ -114,7 +121,6 @@ def myNews():
                     dropdown.place(x=730, y=250)
                     dropdown.lift()
                     for index, other_button in enumerate(categories):
-                        print(index)
                         if index != cat:
                             other_button.config(state=DISABLED)
                     
@@ -125,7 +131,6 @@ def myNews():
                     dropdown.place(x=875, y=250)
                     dropdown.lift()
                     for index, other_button in enumerate(categories):
-                        print(index)
                         if index != cat:
                             other_button.config(state=DISABLED)
                     
@@ -136,7 +141,6 @@ def myNews():
                     dropdown.place(x=1000, y=250)
                     dropdown.lift()
                     for index, other_button in enumerate(categories):
-                        print(index)
                         if index != cat:
                             other_button.config(state=DISABLED)
                     
@@ -145,7 +149,6 @@ def myNews():
         else:
             dropdownIndex = None
             for index, other_button in enumerate(categories):
-                        print(index)
                         if index != cat:
                             other_button.config(state=NORMAL)
             for i in range(0,4):
@@ -163,7 +166,7 @@ def myNews():
             Button(navbar2, text="Sports", cursor="hand2", fg="white", bg="#2367d9", font=('Calibri', 14), activeforeground="#123670", activebackground="#dedfe0", command=lambda:showDropdown(5)),
             Button(navbar2, text="Tehnoloģijas", cursor="hand2", fg="white", bg="#2367d9", font=('Calibri', 14), activeforeground="#123670", activebackground="#dedfe0", command=lambda:showDropdown(6))]
     
-    FilterBtn = Button(navbar2, cursor="hand2", text="Filtrēt", bg="#eee", font=('Calibri', 14), padx=25, activeforeground="#123670", activebackground="#dedfe0", command=lambda: filterArticles(dropdownIndex))
+    FilterBtn = Button(navbar2, cursor="hand2", text="⚙️", bg="#eee", font=('Calibri', 14), padx=25, activeforeground="#123670", activebackground="#dedfe0", command=lambda: filterArticles(dropdownIndex))
     FilterBtn.grid(column=9, row=0, pady=10, padx=10)
 
     navbar2.grid_columnconfigure(0, weight=1, uniform="categories")
@@ -175,8 +178,8 @@ def myNews():
         navbar2.grid_columnconfigure(counter + 1, weight=1, uniform="categories")
         counter += 1 
 
-    savedList=Button(navbar2, cursor="hand2", bg='white', text="Saved", height=2, width=10, command= lambda: openSavedList())
-    savedList.grid(column=0, row=0, pady= 10, padx=10)
+    savedList=Button(navbar2, cursor="hand2", bg='white', text="📃", font=('Calibri', 20), height=1, width=5, command= lambda: openSavedList())
+    savedList.grid(column=0, row=0, pady=10, padx=10)
 
     content.place(x=0, y=500)
     loadArticles(article1, article2)
@@ -185,7 +188,6 @@ def myNews():
         if article1<=homeartLen-2 and article2<=homeartLen-1:
             article1=article1+2
             article2=article2+2
-            print(f"{article1} next")
             loadArticles(article1, article2)
         else:
             article1=0
@@ -197,10 +199,7 @@ def myNews():
 
             article1=article1-2
             article2=article2-2
-            print(f"{article1} next")
             loadArticles(article1, article2)
-        else:
-            print("cannot back")
 
     nextBtn=Button(root, text=">", fg="white", cursor="hand2", bg="#2367d9", font=('Calibri', 36, 'bold'), pady= 30, padx=20, activeforeground="#123670", activebackground="#dedfe0", command=lambda: nextArticles())
     backBtn=Button(root, text="<", fg="white", cursor="hand2", bg="#2367d9", font=('Calibri', 36, 'bold'), pady= 30, padx=20, activeforeground="#123670", activebackground="#dedfe0", command=lambda: backArticles())
@@ -215,11 +214,11 @@ def myNews():
             backBtn.place(x=21, y=400)
     
     def openSavedList():
-        savedListBox=Frame(root, width=1280, height=720, bg="#205fc7", border=2)
+        savedListBox=Frame(root, width=screen_width, height=screen_height, bg="#205fc7", border=2)
         savedListBox.place(x=0, y=200)
         savedList.grid_forget()
-        savedExit=Button(savedListBox, cursor="hand2", bg='red', text="X", fg="white", height=2, width=10, command= lambda: [savedExit.destroy(),savedList.grid(column=0, row=0, pady= 10, padx=10), savedListBox.place_forget(), print("forgor")])
-        savedExit.place(x=25, y= 15)
+        savedExit=Button(savedListBox, cursor="hand2", bg='red', text="🗙", font=('Calibri', 20), fg="white", height=1, width=5, command= lambda: [savedExit.destroy(),savedList.grid(column=0, row=0, pady= 10, padx=10), savedListBox.place_forget()])
+        savedExit.place(x=28, y=8)
         
         
 

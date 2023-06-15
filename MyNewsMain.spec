@@ -5,7 +5,7 @@ block_cipher = None
 
 
 a = Analysis(
-    ['C:\\Users\\3PT\\Desktop\\MyNews\\files\\MyNewsMain.py'],
+    ['C:\\Users\\Admin\\Desktop\\MyNews\\files\\MyNewsMain.py'],
     pathex=[],
     binaries=[],
     datas=[],

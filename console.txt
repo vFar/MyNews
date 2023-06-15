@@ -3,3 +3,6 @@ pip install PyQt5
 pip install tk
 pip install pyinstaller
 pip install pillow
+
+
+pyinstaller --onefile pythonScriptName.py

@@ -18,7 +18,7 @@ navbar1 = Frame(root, bg='#2671eb', height=200, width=1920)
 navbar2 = Frame(root, bg='#205fc7', height=50, width=1920)
 
 logo = Label(navbar1, text="M   y   N   e   w   s", font=('Calibri', 28, 'bold'), bg='#174796', fg='white', pady=15, padx=200)
-slogan = Label(navbar1, text="Tiec informēts ar MyNews!", font=('Calibri', 14, 'italic'), bg='#205fc7', fg='#fcfcfc', pady=10, padx=120)
+slogan = Label(navbar1, text="Tiec informēts ar MyNews!", font=('Calibri', 14, 'italic'), bg='#205fc7', fg='#fcfcfc', pady=9, padx=120)
 
 def filterArticles(dpIndex):
     for index, other_button in enumerate(categories):
@@ -35,7 +35,6 @@ def filterArticles(dpIndex):
         selected.append(var2.get())
         selected.append(var3.get())
         selected.append(var4.get())
-        print(selected)
         for i in range(0,4):
            if selected[i] == 1:
               sub_cat.append(bSub_categories[dpIndex][i])
@@ -56,9 +55,6 @@ def filterArticles(dpIndex):
                                language='en',
                                sort_by='relevancy')
               articles = data['articles']
-              for x, y in enumerate(articles):
-                  print(f'{x}  {y["title"]}')
-        print(len(sub_cat))      
     else:
         print("Error")
     
@@ -68,7 +64,6 @@ def filterArticles(dpIndex):
 
 
 def loadArticles(article1, article2):
-  print(f"{article1} load")
 
   for  i, article in enumerate(homeart):
     articles[i].pack_forget()
@@ -114,7 +109,6 @@ from_param = from_date.strftime('%Y-%m-%d')
 to = to_date.strftime('%Y-%m-%d')
 
 catRan=random.randint(0, 6)
-print(catRan," cum")
 
 # Make the API request with the updated date range
 homeData = newsapi.get_everything(
@@ -128,7 +122,6 @@ homeData = newsapi.get_everything(
 
 homeart = homeData['articles']
 homeartLen=homeData['totalResults']
-print(homeartLen)
 
 
 for  i, article in enumerate(homeart):
