@@ -209,6 +209,7 @@ def myNews():
             backBtn.place(x=21, y=400)
     
     def openSavedList():
+        savedArr=checkSavedTxt()
         labelList=[]
         savedListBox=Frame(root, width=1280, height=720, bg="#205fc7", border=2)
         savedListBox.place(x=0, y=200)

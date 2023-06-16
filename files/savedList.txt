@@ -1,4 +1,2 @@
 tituls | apraksts | url
-tituls | apraksts | google.com
-tituls | apraksts | url
-tituls | apraksts | url
+Porsche’s new Mission X concept is a bubbly, all-electric hypercar | Porsche’s new electric Mission X hypercar concept keeps its battery behind the seat, and the company says if it ever entered production, it would be the fastest street-legal vehicle around the Nürburgring Nordschleife. | https://www.theverge.com/2023/6/11/23756956/porsche-mission-x-hypercar-taycan-electric-car-concept
