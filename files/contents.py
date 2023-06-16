@@ -89,21 +89,14 @@ def filterArticles(dpIndex):
         print("Error")
     
 def saveArticle(title, desc, url):
-    checkSavedTxt()
-    print(title, url)
+    savedArr = checkSavedTxt()
     for index, row in enumerate(savedArr):
-        if row[2] != url:
-            with open("files/savedList.txt", "a") as file:
-                file.write(title + " | " + desc + " | " + url + "\n")
-            saveArr = checkSavedTxt()
-        else:
+        if row[2] == url:
             messagebox.showerror("Error", "Article is already duplicated.")
-            with open(r"files\savedList.txt", 'r+') as fp:
-                lines = fp.readlines()
-                fp.seek(0)
-                fp.truncate()
-                fp.writelines(lines[:-1])
-            break
+            return
+    
+    with open("files/savedList.txt", "a") as file:
+        file.write(title + " | " + desc + " | " + url + "\n")
 
 
 
