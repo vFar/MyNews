@@ -5,6 +5,9 @@ from PIL import Image,ImageTk
 import random, webbrowser
 import os.path
 from newsapi import NewsApiClient
+from tempfile import NamedTemporaryFile
+import shutil
+
 apikey = "8451a189a10f47e3a7b4f02d6624be3f"
 newsapi = NewsApiClient(api_key = apikey)
 
@@ -14,7 +17,10 @@ var1 = IntVar()
 var2 = IntVar()
 var3 = IntVar()
 var4 = IntVar()
-
+titles= []
+articles = []
+descriptions=[]
+urls=[]
 bCategories=["business", "entertainment", "general", "health", "science", "sports", "technology"]
 navbar1 = Frame(root, bg='#2671eb', height=200, width=1920)
 navbar2 = Frame(root, bg='#205fc7', height=50, width=1920)
@@ -47,7 +53,7 @@ def checkSavedTxt():
 
 
 
-def filterArticles(dpIndex):
+def filterArticles(dpIndex, art1):
     for index, other_button in enumerate(categories):
                         if index != 0:
                             other_button.config(state=NORMAL)
@@ -66,8 +72,10 @@ def filterArticles(dpIndex):
         for i in range(0,4):
            if selected[i] == 1:
               sub_cat.append(bSub_categories[dpIndex][i])
-        
+        print(catLen, "harr")
         catLen = len(sub_cat)
+        print(catLen)
+        print(len(sub_cat))
         var1.set(0)
         var2.set(0)
         var3.set(0)
@@ -77,17 +85,122 @@ def filterArticles(dpIndex):
           case 1:
               print(bCategories[dpIndex])  
               data = newsapi.get_everything(q=sub_cat[0],
-                               category=bCategories[dpIndex],
-                               from_param='2023-03-15',
-                               to='2023-04-05',
-                               language='en',
-                               sort_by='relevancy')
-              articles = data['articles']
-              for x, y in enumerate(articles):
-                  print(f'{x}  {y["title"]}')
-        print(len(sub_cat))      
-    else:
-        print("Error")
+                                  from_param='2023-06-01',
+                                  to='2023-06-15',
+                                  language='en',
+                                  sort_by='relevancy')
+              homeart = data['articles']
+              print(sub_cat)
+
+            # Clear existing articles, titles, and descriptions
+              for article in articles:
+                article.pack_forget()
+              for title in titles:
+                title.place_forget()
+              for description in descriptions:
+                description.place_forget()
+              
+            # Create new articles, titles, and descriptions based on the updated data
+              for i, article in enumerate(homeart):
+                urls.insert(i, article["url"])
+                articles.insert(i, (Label(root, width=1000, height=250, bg="#205fc7", cursor="hand2")))
+                articles[i].bind("<Button-1>", lambda e, url=urls[i]: open_link(url))
+                titles.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('Calibri', 14, "underline"), bg="#205fc7", fg="white", text=article["title"])))
+                titles[i].bind("<Button-1>", lambda e, url=urls[i]: open_link(url))
+                descriptions.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('Calibri', 13), bg="#205fc7", fg="white", text=article["description"])))
+
+            # Load and display the updated articles
+              loadArticles(0, 1) 
+
+          case 2:
+              print(bCategories[dpIndex])  
+              data = newsapi.get_everything(q=sub_cat[0]+" "+sub_cat[1],
+                                  from_param='2023-06-01',
+                                  to='2023-06-15',
+                                  language='en',
+                                  sort_by='relevancy')
+              homeart = data['articles']
+              print(homeart)
+
+            # Clear existing articles, titles, and descriptions
+              for article in articles:
+                article.pack_forget()
+              for title in titles:
+                title.place_forget()
+              for description in descriptions:
+                description.place_forget()
+              
+            # Create new articles, titles, and descriptions based on the updated data
+              for i, article in enumerate(homeart):
+                urls.insert(i, article["url"])
+                articles.insert(i, (Label(root, width=1000, height=250, bg="#205fc7", cursor="hand2")))
+                articles[i].bind("<Button-1>", lambda e, url=urls[i]: open_link(url))
+                titles.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('Calibri', 14, "underline"), bg="#205fc7", fg="white", text=article["title"])))
+                titles[i].bind("<Button-1>", lambda e, url=urls[i]: open_link(url))
+                descriptions.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('Calibri', 13), bg="#205fc7", fg="white", text=article["description"])))
+
+            # Load and display the updated articles
+              loadArticles(0, 1) 
+          case 3:
+              print(bCategories[dpIndex])  
+              data = newsapi.get_everything(q=sub_cat[0]+" "+sub_cat[1]+" "+sub_cat[2],
+                                  from_param='2023-06-01',
+                                  to='2023-06-15',
+                                  language='en',
+                                  sort_by='relevancy')
+              homeart = data['articles']
+              print(homeart)
+
+            # Clear existing articles, titles, and descriptions
+              for article in articles:
+                article.pack_forget()
+              for title in titles:
+                title.place_forget()
+              for description in descriptions:
+                description.place_forget()
+              
+            # Create new articles, titles, and descriptions based on the updated data
+              for i, article in enumerate(homeart):
+                urls.insert(i, article["url"])
+                articles.insert(i, (Label(root, width=1000, height=250, bg="#205fc7", cursor="hand2")))
+                articles[i].bind("<Button-1>", lambda e, url=urls[i]: open_link(url))
+                titles.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('Calibri', 14, "underline"), bg="#205fc7", fg="white", text=article["title"])))
+                titles[i].bind("<Button-1>", lambda e, url=urls[i]: open_link(url))
+                descriptions.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('Calibri', 13), bg="#205fc7", fg="white", text=article["description"])))
+
+            # Load and display the updated articles
+              loadArticles(0, 1) 
+
+          case 4:
+              print(bCategories[dpIndex])  
+              data = newsapi.get_everything(q=sub_cat[0]+" "+sub_cat[1]+" "+sub_cat[2]+" "+sub_cat[3],
+                                  from_param='2023-06-01',
+                                  to='2023-06-15',
+                                  language='en',
+                                  sort_by='relevancy')
+              homeart = data['articles']
+              print(homeart)
+
+            # Clear existing articles, titles, and descriptions
+              for article in articles:
+                article.pack_forget()
+              for title in titles:
+                title.place_forget()
+              for description in descriptions:
+                description.place_forget()
+              
+            # Create new articles, titles, and descriptions based on the updated data
+              for i, article in enumerate(homeart):
+                urls.insert(i, article["url"])
+                articles.insert(i, (Label(root, width=1000, height=250, bg="#205fc7", cursor="hand2")))
+                articles[i].bind("<Button-1>", lambda e, url=urls[i]: open_link(url))
+                titles.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('Calibri', 14, "underline"), bg="#205fc7", fg="white", text=article["title"])))
+                titles[i].bind("<Button-1>", lambda e, url=urls[i]: open_link(url))
+                descriptions.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('Calibri', 13), bg="#205fc7", fg="white", text=article["description"])))
+
+            # Load and display the updated articles
+              loadArticles(0, 1) 
+
     
 def saveArticle(title, desc, url):
     savedArr = checkSavedTxt()
@@ -98,22 +211,27 @@ def saveArticle(title, desc, url):
     
     with open("files/savedList.txt", "a") as file:
         file.write(title + " | " + desc + " | " + url + "\n")
+        
 
 
 def deleteArticle(delUrl):
-     with open("files/savedList.txt", "r") as fp:
-            lines = fp.readlines()
+    # Create a temporary file
+    with NamedTemporaryFile(mode='w', delete=False) as temp_file:
+        with open("files/savedList.txt", "r") as fp:
+            for line in fp:
+                # Check if the line contains the given URL
+                if delUrl not in line:
+                    temp_file.write(line)
 
-     with open("files/savedList.txt", "w") as fp:
-                    for line in lines:
-                        if line.strip("\n") != delUrl:
-                            fp.write(line)
+    # Replace the original file with the temporary file
+    shutil.move(temp_file.name, "files/savedList.txt")
   
 
 
 
 def loadArticles(article1, article2):
   print(f"{article1} load")
+  
 
   for  i, article in enumerate(homeart):
     articles[i].pack_forget()
@@ -148,10 +266,7 @@ bSub_categories=[["Finance", "Marketing", "Management", "E-commerce"],
                 ["Physics", "Astronomy", "Biology", "Medicine science"],
                 ["Football", "Basketball", "Golf", "Team"],
                 ["Artificial intelligence", "Cybersecurity", "Gaming technology", "Virtual reality"]]
-titles= []
-articles = []
-descriptions=[]
-urls=[]
+
 
 def open_link(url):
     webbrowser.open_new(url)

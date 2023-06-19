@@ -13,6 +13,7 @@ toggleDropdown = False
 dropdownIndex = None
 categories = []
 bCategories = []
+toggleSaved=False
 
 
 def center(win):
@@ -31,7 +32,7 @@ def center(win):
     
 
 def myNews():
-    global root, content, article1, article2, categories, dropdown
+    global root, content, article1, article2, categories, dropdown, reloadSavedList
     savedArr=[]
 
     root = Tk()
@@ -157,7 +158,7 @@ def myNews():
             Button(navbar2, text="Sports", cursor="hand2", fg="white", bg="#2367d9", font=('Calibri', 14), activeforeground="#123670", activebackground="#dedfe0", command=lambda:showDropdown(5)),
             Button(navbar2, text="Tehnoloģijas", cursor="hand2", fg="white", bg="#2367d9", font=('Calibri', 14), activeforeground="#123670", activebackground="#dedfe0", command=lambda:showDropdown(6))]
     
-    FilterBtn = Button(navbar2, cursor="hand2", text="Filtrēt", bg="#eee", font=('Calibri', 14), padx=25, activeforeground="#123670", activebackground="#dedfe0", command=lambda: filterArticles(dropdownIndex))
+    FilterBtn = Button(navbar2, cursor="hand2", text="Filtrēt", bg="#eee", font=('Calibri', 14), padx=25, activeforeground="#123670", activebackground="#dedfe0", command=lambda: filterArticles(dropdownIndex, article1))
     FilterBtn.grid(column=9, row=0, pady=10, padx=10)
 
     navbar2.grid_columnconfigure(0, weight=1, uniform="categories")
@@ -209,27 +210,31 @@ def myNews():
             backBtn.place(x=21, y=400)
     
     def openSavedList():
+        global savedListBox, toggleDropdown
+        toggleSaved=True
         savedArr=checkSavedTxt()
-        labelList=[]
         savedListBox=Frame(root, width=1280, height=720, bg="#205fc7", border=2)
         savedListBox.place(x=0, y=200)
         savedList.grid_forget()
-        savedExit=Button(savedListBox, cursor="hand2", bg='red', text="X", fg="white", height=2, width=10, command= lambda: [savedExit.destroy(),savedList.grid(column=0, row=0, pady= 10, padx=10), savedListBox.place_forget(), print("forgor")])
-        savedExit.place(x=25, y= 15)
+        savedExit = Button(savedListBox, cursor="hand2", bg='red', text="X", fg="white", height=2, width=10, command=lambda: [savedExit.destroy(), savedList.grid(column=0, row=0, pady=10, padx=10), savedListBox.place_forget()])
+        savedExit.place(x=25, y=15)
         for index, obj in enumerate(savedArr):
-            box=Frame(savedListBox, bg="#205fc7", highlightbackground="black", highlightthickness=2, cursor="hand2")
+            box=Frame(savedListBox, bg="#205fc7", highlightbackground="black", highlightthickness=2, cursor="hand2", padx=100)
             box.pack(anchor=N)
             box.bind("<Button-1>", lambda e, url=savedArr[index][2]: open_link(url))
             title=Label(box, text=savedArr[index][0], fg="white", bg="#205fc7")
             desc=Label(box, text=savedArr[index][1], fg="white", bg="#205fc7")
-            deleteBtn=Button(box, text="Dzēst", bg="red", fg="black", command=lambda: deleteArticle(savedArr[index][2]))
-            deleteBtn.place(x=50, y=50)
+            deleteBtn=Button(box, text="Dzēst", bg="red", fg="black", command=lambda: [deleteArticle(savedArr[index][2]) , reloadSavedList()])
+            deleteBtn.place(x=1, y=1)
             title.pack(anchor=NW)
             title.bind("<Button-1>", lambda e, url=savedArr[index][2]: open_link(url))
             desc.pack(anchor=W)
             desc.bind("<Button-1>", lambda e, url=savedArr[index][2]: open_link(url))
         
-        
+    def reloadSavedList():
+        savedList.grid(column=0, row=0, pady= 10, padx=10)
+        savedListBox.place_forget()
+        openSavedList()
 
 
     root.bind('<Map>', check_winstate)
