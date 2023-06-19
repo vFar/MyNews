@@ -16,16 +16,6 @@ categories = []
 bCategories = []
 
 
-#def checkSaved():
-#    if((os.path.exists('files/savedList.txt'))==False):
-#        f=open('files/savedList.txt', 'x')
-#        f.write("cumsauce")
-#        f.close()
-
-
-
-
-
 def center(win):
     win.update_idletasks()
     width = win.winfo_width()
@@ -43,6 +33,7 @@ def center(win):
 
 def myNews():
     global root, content, article1, article2, categories, dropdown
+    savedArr=[]
 
     root = Tk()
     root.title("MyNews | Sākuma ekrāns")
@@ -63,11 +54,11 @@ def myNews():
     root.geometry('1280x720')
     root.configure(bg="white")
 
-    from contents import navbar1,navbar2,slogan, logo, content, loadArticles, sub_categories, filterArticles, homeartLen, articles
+    from contents import navbar1,navbar2,slogan, logo, content, loadArticles, sub_categories, filterArticles, homeartLen, articles, checkSavedTxt, open_link, deleteArticle
     
     navbar1.pack(anchor=N, fill="both", pady=0, padx=0)
     navbar2.pack(anchor=N, fill="both", pady=0, padx=0)
-
+    savedArr=checkSavedTxt()
     logo.place(relx=0.5, rely=0.5, anchor='center')
     slogan.place(relx=0.5, rely=0.81, anchor='center')
 
@@ -214,11 +205,27 @@ def myNews():
             backBtn.place(x=21, y=400)
     
     def openSavedList():
+        savedArr=checkSavedTxt()
+        labelList=[]
+        savedListBox=Frame(root, width=1280, height=720, bg="#205fc7", border=2)
         savedListBox=Frame(root, width=screen_width, height=screen_height, bg="#205fc7", border=2)
         savedListBox.place(x=0, y=200)
         savedList.grid_forget()
         savedExit=Button(savedListBox, cursor="hand2", bg='red', text="🗙", font=('Calibri', 20), fg="white", height=1, width=5, command= lambda: [savedExit.destroy(),savedList.grid(column=0, row=0, pady= 10, padx=10), savedListBox.place_forget()])
         savedExit.place(x=28, y=8)
+
+        for index, obj in enumerate(savedArr):
+            box=Frame(savedListBox, bg="#205fc7", highlightbackground="black", highlightthickness=2, cursor="hand2")
+            box.pack(anchor=N)
+            box.bind("<Button-1>", lambda e, url=savedArr[index][2]: open_link(url))
+            title=Label(box, text=savedArr[index][0], fg="white", bg="#205fc7")
+            desc=Label(box, text=savedArr[index][1], fg="white", bg="#205fc7")
+            deleteBtn=Button(box, text="Dzēst", bg="red", fg="black", command=lambda: deleteArticle(savedArr[index][2]))
+            deleteBtn.place(x=50, y=50)
+            title.pack(anchor=NW)
+            title.bind("<Button-1>", lambda e, url=savedArr[index][2]: open_link(url))
+            desc.pack(anchor=W)
+            desc.bind("<Button-1>", lambda e, url=savedArr[index][2]: open_link(url))
         
         
 

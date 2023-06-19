@@ -1,13 +1,15 @@
 from tkinter import *
+from tkinter import messagebox
 import datetime
 from PIL import Image,ImageTk
 import random, webbrowser
+import os.path
 from newsapi import NewsApiClient
 apikey = "8451a189a10f47e3a7b4f02d6624be3f"
 newsapi = NewsApiClient(api_key = apikey)
 
 from createWindow import root, dropdown, toggleDropdown,categories
-global articles
+global articles, savedArr
 var1 = IntVar()
 var2 = IntVar()
 var3 = IntVar()
@@ -19,6 +21,31 @@ navbar2 = Frame(root, bg='#205fc7', height=50, width=1920)
 
 logo = Label(navbar1, text="M   y   N   e   w   s", font=('Calibri', 28, 'bold'), bg='#174796', fg='white', pady=15, padx=200)
 slogan = Label(navbar1, text="Tiec informēts ar MyNews!", font=('Calibri', 14, 'italic'), bg='#205fc7', fg='#fcfcfc', pady=9, padx=120)
+
+
+def checkSavedTxt():
+    global savedArr
+    savedArr = []
+    file_path = 'files/savedList.txt'
+
+    if not os.path.exists(file_path):
+        with open(file_path, 'w') as file:
+            print(f"The file {file_path} was created.")
+            file.write("tituls | apraksts | url\n")
+
+    else:
+        print(f"The file {file_path} already exists.")
+        with open(file_path, 'r') as file:
+            for line in file:
+                parts = line.strip().split('|')
+                if len(parts) == 3:
+                    title = parts[0].strip()
+                    desc = parts[1].strip()
+                    url = parts[2].strip()
+                    savedArr.append([title, desc, url])
+    return savedArr
+
+
 
 def filterArticles(dpIndex):
     for index, other_button in enumerate(categories):
@@ -58,8 +85,26 @@ def filterArticles(dpIndex):
     else:
         print("Error")
     
+def saveArticle(title, desc, url):
+    savedArr = checkSavedTxt()
+    for index, row in enumerate(savedArr):
+        if row[2] == url:
+            messagebox.showerror("Error", "Article is already duplicated.")
+            return
+    
+    with open("files/savedList.txt", "a") as file:
+        file.write(title + " | " + desc + " | " + url + "\n")
 
 
+def deleteArticle(delUrl):
+     with open("files/savedList.txt", "r") as fp:
+            lines = fp.readlines()
+
+     with open("files/savedList.txt", "w") as fp:
+                    for line in lines:
+                        if line.strip("\n") != delUrl:
+                            fp.write(line)
+  
 
 
 
@@ -68,13 +113,19 @@ def loadArticles(article1, article2):
   for  i, article in enumerate(homeart):
     articles[i].pack_forget()
 
+  saveBtn1 = Button(articles[article1], text="save", fg="black", bg="white", command=lambda: saveArticle(homeart[article1]['title'], homeart[article1]['description'], homeart[article1]['url']))
+  saveBtn2 = Button(articles[article2], text="save", fg="black", bg="white", command=lambda: saveArticle(homeart[article1]['title'], homeart[article1]['description'], homeart[article1]['url']))
+
   articles[article1].pack(pady=84)
   titles[article1].place(x=25, y=25)
   descriptions[article1].place(x=25, y=70)
+  saveBtn1.place(x=900, y=150)
+
 
   articles[article2].pack(pady=30)
   titles[article2].place(x=25, y=25)
   descriptions[article2].place(x=25, y=70)
+  saveBtn2.place(x=900, y=150)
          
 
 content = Frame(root, width=1920, height=1000, padx=1920, bg="white")
@@ -101,7 +152,7 @@ def open_link(url):
     webbrowser.open_new(url)
 
 current_date = datetime.date.today()
-from_date = current_date - datetime.timedelta(days=29)
+from_date = current_date - datetime.timedelta(days=28)
 to_date = current_date
 
 # Convert the date objects to strings in the required format
@@ -126,7 +177,7 @@ homeartLen=homeData['totalResults']
 
 for  i, article in enumerate(homeart):
     urls.insert(i,article["url"])
-    articles.insert(i,(Frame(root, width=1000, height=250, bg="#205fc7", cursor="hand2")))
+    articles.insert(i,(Label(root, width=1000, height=250, bg="#205fc7", cursor="hand2")))
     articles[i].bind("<Button-1>", lambda e, url=urls[i]: open_link(url))
     titles.insert(i,(Label(articles[i], justify="left", wraplength=970, font=('Calibri', 14, "underline"), bg="#205fc7", fg="white",text=article["title"])))
     titles[i].bind("<Button-1>", lambda e, url=urls[i]: open_link(url))
