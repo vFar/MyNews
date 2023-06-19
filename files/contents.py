@@ -19,8 +19,8 @@ bCategories=["business", "entertainment", "general", "health", "science", "sport
 navbar1 = Frame(root, bg='#2671eb', height=200, width=1920)
 navbar2 = Frame(root, bg='#205fc7', height=50, width=1920)
 
-logo = Label(navbar1, text="M   y   N   e   w   s", font=('Calibri', 28, 'bold'), bg='#174796', fg='white', pady=15, padx=200)
-slogan = Label(navbar1, text="Tiec informēts ar MyNews!", font=('Calibri', 14, 'italic'), bg='#205fc7', fg='#fcfcfc', pady=9, padx=120)
+logo = Label(navbar1, text="M   y   N   e   w   s", font=('MS Sans Serif', 28, 'bold'), bg='#174796', fg='white', pady=15, padx=200)
+slogan = Label(navbar1, text="Tiec informēts ar MyNews!", font=('MS Sans Serif', 14), bg='#205fc7', fg='#fcfcfc', pady=9, padx=120)
 
 
 def checkSavedTxt():
@@ -89,7 +89,7 @@ def saveArticle(title, desc, url):
     savedArr = checkSavedTxt()
     for index, row in enumerate(savedArr):
         if row[2] == url:
-            messagebox.showerror("Error", "Article is already duplicated.")
+            messagebox.showerror("Error", "Article has already been saved.")
             return
     
     with open("files/savedList.txt", "a") as file:
@@ -108,24 +108,20 @@ def deleteArticle(delUrl):
 
 
 
-def loadArticles(article1, article2):
+def loadArticles(article1):
 
   for  i, article in enumerate(homeart):
     articles[i].pack_forget()
 
-  saveBtn1 = Button(articles[article1], text="save", fg="black", bg="white", command=lambda: saveArticle(homeart[article1]['title'], homeart[article1]['description'], homeart[article1]['url']))
-  saveBtn2 = Button(articles[article2], text="save", fg="black", bg="white", command=lambda: saveArticle(homeart[article1]['title'], homeart[article1]['description'], homeart[article1]['url']))
+  saveBtn1 = Button(root, text="💾", fg="black", bg="white", font=('MS Sans Serif', 16), width=20, height=1, command=lambda: saveArticle(homeart[article1]['title'], homeart[article1]['description'], homeart[article1]['url']))
 
   articles[article1].pack(pady=84)
-  titles[article1].place(x=25, y=25)
-  descriptions[article1].place(x=25, y=70)
-  saveBtn1.place(x=900, y=150)
+  titles[article1].place(x=160, y=40)
+  descriptions[article1].place(x=160, y=85)
+  saveBtn1.place(x=550, y=655)
 
+  print(article1)
 
-  articles[article2].pack(pady=30)
-  titles[article2].place(x=25, y=25)
-  descriptions[article2].place(x=25, y=70)
-  saveBtn2.place(x=900, y=150)
          
 
 content = Frame(root, width=1920, height=1000, padx=1920, bg="white")
@@ -179,9 +175,9 @@ for  i, article in enumerate(homeart):
     urls.insert(i,article["url"])
     articles.insert(i,(Label(root, width=1000, height=250, bg="#205fc7", cursor="hand2")))
     articles[i].bind("<Button-1>", lambda e, url=urls[i]: open_link(url))
-    titles.insert(i,(Label(articles[i], justify="left", wraplength=970, font=('Calibri', 14, "underline"), bg="#205fc7", fg="white",text=article["title"])))
+    titles.insert(i,(Label(articles[i], justify="left", wraplength=970, font=('MS Sans Serif', 14, "underline"), bg="#205fc7", fg="white",text=article["title"])))
     titles[i].bind("<Button-1>", lambda e, url=urls[i]: open_link(url))
-    descriptions.insert(i,(Label(articles[i], justify="left", wraplength=970, font=('Calibri', 13), bg="#205fc7", fg="white", text=article["description"])))
+    descriptions.insert(i,(Label(articles[i], justify="left", wraplength=970, font=('MS Sans Serif', 13), bg="#205fc7", fg="white", text=article["description"])))
     
 
   
