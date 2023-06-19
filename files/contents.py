@@ -31,6 +31,7 @@ def checkSavedTxt():
     if not os.path.exists(file_path):
         with open(file_path, 'w') as file:
             print(f"The file {file_path} was created.")
+            file.write("tituls | apraksts | url\n")
 
     else:
         print(f"The file {file_path} already exists.")
@@ -97,6 +98,17 @@ def saveArticle(title, desc, url):
     
     with open("files/savedList.txt", "a") as file:
         file.write(title + " | " + desc + " | " + url + "\n")
+
+
+def deleteArticle(delUrl):
+     with open("files/savedList.txt", "r") as fp:
+            lines = fp.readlines()
+
+     with open("files/savedList.txt", "w") as fp:
+                    for line in lines:
+                        if line.strip("\n") != delUrl:
+                            fp.write(line)
+  
 
 
 

@@ -46,7 +46,7 @@ def myNews():
     root.geometry('1280x720')
     root.configure(bg="white")
 
-    from contents import navbar1,navbar2,slogan, logo, content, loadArticles, sub_categories, filterArticles, homeartLen, articles, checkSavedTxt, open_link
+    from contents import navbar1,navbar2,slogan, logo, content, loadArticles, sub_categories, filterArticles, homeartLen, articles, checkSavedTxt, open_link, deleteArticle
     
     navbar1.pack(anchor=N, fill="both", pady=0, padx=0)
     navbar2.pack(anchor=N, fill="both", pady=0, padx=0)
@@ -222,6 +222,8 @@ def myNews():
             box.bind("<Button-1>", lambda e, url=savedArr[index][2]: open_link(url))
             title=Label(box, text=savedArr[index][0], fg="white", bg="#205fc7")
             desc=Label(box, text=savedArr[index][1], fg="white", bg="#205fc7")
+            deleteBtn=Button(box, text="Dzēst", bg="red", fg="black", command=lambda: deleteArticle(savedArr[index][2]))
+            deleteBtn.place(x=50, y=50)
             title.pack(anchor=NW)
             title.bind("<Button-1>", lambda e, url=savedArr[index][2]: open_link(url))
             desc.pack(anchor=W)
