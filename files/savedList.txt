@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 New business body launched as CBI faces crunch vote | The Business Council, set up by the Chambers of Commerce, has Heathrow, BP and Drax among its members. | https://www.bbc.co.uk/news/business-65804767
 iPhone maker Foxconn to switch to cars as US-China tensions soar | The firm, which makes over half of the world’s Apple products, seeks its next big growth driver. | https://www.bbc.co.uk/news/business-65886658
 The Ashes 2023: England's entertainers take on ominous Australia - Felix White column | In his first BBC Sport column this summer, Felix White says the men's Ashes is set to be an outstanding contest after an unusual build-up. | https://www.bbc.co.uk/sport/cricket/65889903
@@ -6,3 +7,7 @@ Across the Spider-Verse opens ground-breaking franchise to female fans | Spider-
 First look inside Banksy's new exhibition in Glasgow | The graffiti artist's first solo exhibition in 14 years is behind held at Glasgow's Gallery of Modern Art. | https://www.bbc.co.uk/news/av/uk-scotland-65913092
 Apple’s entry-level MacBook Air is down to its all-time low at Amazon | Apple’s M1 MacBook Air is back down to $799.99. You can also snag a year of Peacock Premium for 60 percent off, as well as a $20 discount on Amazon’s latest Fire TV Cube. | https://www.theverge.com/2023/5/27/23738784/apple-m1-macbook-air-peacock-premium-amazon-fire-tv-cube-streaming-device-deal-sale
 Beijing's comedy crackdown is hitting its music scene | The crackdown on stand-up comedy unleashed by a joke is now hurting Beijing's vibrant live music scene. | https://www.bbc.co.uk/news/world-asia-china-65784761
+=======
+tituls | apraksts | url
+Ford opens new EV-focused assembly plant in Germany | Ford has opened its Cologne Electric Vehicle Center. Ford says the plant’s transformation comes as part of a $2 billion investment and will initially produce its electric Explorer. | https://www.theverge.com/2023/6/12/23757800/ford-germany-electric-vehicle-center-explorer-ev-cologne
+>>>>>>> origin/renars

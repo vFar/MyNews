@@ -12,7 +12,7 @@ apikey = "f9e757ccd2bc4d07b56cd2a79f4509cc"
 newsapi = NewsApiClient(api_key = apikey)
 
 from createWindow import root, dropdown, toggleDropdown,categories
-global articles, savedArr
+global articles, savedArr, homeart, homeartLen
 var1 = IntVar()
 var2 = IntVar()
 var3 = IntVar()
@@ -53,7 +53,7 @@ def checkSavedTxt():
 
 
 
-def filterArticles(dpIndex, art1):
+def filterArticles(dpIndex):
     for index, other_button in enumerate(categories):
                         if index != 0:
                             other_button.config(state=NORMAL)
@@ -84,8 +84,8 @@ def filterArticles(dpIndex, art1):
           case 1:
               print(bCategories[dpIndex])  
               data = newsapi.get_everything(q=sub_cat[0],
-                                  from_param='2023-06-01',
-                                  to='2023-06-15',
+                                  from_param=from_param,
+                                  to=to,
                                   language='en',
                                   sort_by='relevancy')
               homeart = data['articles']
@@ -109,7 +109,7 @@ def filterArticles(dpIndex, art1):
                 descriptions.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('Calibri', 13), bg="#205fc7", fg="white", text=article["description"])))
 
             # Load and display the updated articles
-              loadArticles(0) 
+              loadArticles(random.randint(0,99)) 
 
           case 2:
               print(bCategories[dpIndex])  
@@ -139,7 +139,7 @@ def filterArticles(dpIndex, art1):
                 descriptions.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('Calibri', 13), bg="#205fc7", fg="white", text=article["description"])))
 
             # Load and display the updated articles
-              loadArticles(0) 
+              loadArticles(random.randint(0,99)) 
           case 3:
               print(bCategories[dpIndex])  
               data = newsapi.get_everything(q=sub_cat[0]+" "+sub_cat[1]+" "+sub_cat[2],
@@ -168,7 +168,7 @@ def filterArticles(dpIndex, art1):
                 descriptions.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('Calibri', 13), bg="#205fc7", fg="white", text=article["description"])))
 
             # Load and display the updated articles
-              loadArticles(0) 
+              loadArticles(random.randint(0,99)) 
 
           case 4:
               print(bCategories[dpIndex])  
@@ -198,7 +198,7 @@ def filterArticles(dpIndex, art1):
                 descriptions.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('Calibri', 13), bg="#205fc7", fg="white", text=article["description"])))
 
             # Load and display the updated articles
-              loadArticles(0) 
+              loadArticles(random.randint(0,99)) 
 
     
 def saveArticle(title, desc, url):
@@ -274,27 +274,37 @@ to = to_date.strftime('%Y-%m-%d')
 
 catRan=random.randint(0, 6)
 
-# Make the API request with the updated date range
-homeData = newsapi.get_everything(
-    q=bCategories[catRan],
-    sources='bbc-news, the-verge',
-    from_param=from_param,
-    to=to,
-    language='en',
-    sort_by='relevancy'
-)
 
-homeart = homeData['articles']
-homeartLen=homeData['totalResults']
+def randomArticles():
+    for article in articles:
+        article.pack_forget()
+    for title in titles:
+        title.place_forget()
+    for description in descriptions:
+        description.place_forget()
+
+    global homeart, homeartLen
+    # Make the API request with the updated date range
+    homeData = newsapi.get_everything(
+        q=bCategories[catRan],
+        from_param=from_param,
+        to=to,
+        language='en',
+        sort_by='relevancy'
+    )
+
+    homeart = homeData['articles']
+    homeartLen=homeData['totalResults']
 
 
-for  i, article in enumerate(homeart):
-    urls.insert(i,article["url"])
-    articles.insert(i,(Label(root, width=1000, height=250, bg="#205fc7", cursor="hand2")))
-    articles[i].bind("<Button-1>", lambda e, url=urls[i]: open_link(url))
-    titles.insert(i,(Label(articles[i], justify="left", wraplength=970, font=('MS Sans Serif', 14, "underline"), bg="#205fc7", fg="white",text=article["title"])))
-    titles[i].bind("<Button-1>", lambda e, url=urls[i]: open_link(url))
-    descriptions.insert(i,(Label(articles[i], justify="left", wraplength=970, font=('MS Sans Serif', 13), bg="#205fc7", fg="white", text=article["description"])))
+    for  i, article in enumerate(homeart):
+        urls.insert(i,article["url"])
+        articles.insert(i,(Label(root, width=1000, height=250, bg="#205fc7", cursor="hand2")))
+        articles[i].bind("<Button-1>", lambda e, url=urls[i]: open_link(url))
+        titles.insert(i,(Label(articles[i], justify="left", wraplength=970, font=('MS Sans Serif', 14, "underline"), bg="#205fc7", fg="white",text=article["title"])))
+        titles[i].bind("<Button-1>", lambda e, url=urls[i]: open_link(url))
+        descriptions.insert(i,(Label(articles[i], justify="left", wraplength=970, font=('MS Sans Serif', 13), bg="#205fc7", fg="white", text=article["description"])))
+randomArticles()
     
 
   

@@ -9,7 +9,7 @@ body = None
 content = None
 cWindow = None
 global article1, categories, toggleDropdown
-article1 = 0
+article1 = random.randint(0,99)
 toggleDropdown = False
 dropdownIndex = None
 categories = []
@@ -49,7 +49,7 @@ def myNews():
     root.geometry('1280x720')
     root.configure(bg="white")
 
-    from contents import navbar1,navbar2,slogan, logo, content, loadArticles, sub_categories, filterArticles, homeartLen, articles, checkSavedTxt, open_link, deleteArticle
+    from contents import navbar1,navbar2,slogan, logo, content, loadArticles, sub_categories, filterArticles, homeartLen, articles, checkSavedTxt, open_link, deleteArticle, randomArticles
     
     article1 = random.randint(0, 99)
 
@@ -153,8 +153,11 @@ def myNews():
             Button(navbar2, padx=20, text="Sports", cursor="hand2", fg="white", bg="#2367d9", font=('MS Sans Serif', 14), activeforeground="#123670", activebackground="#dedfe0", command=lambda:showDropdown(5)),
             Button(navbar2, padx=20, text="Tehnoloģijas", cursor="hand2", fg="white", bg="#2367d9", font=('MS Sans Serif', 14), activeforeground="#123670", activebackground="#dedfe0", command=lambda:showDropdown(6))]
     
-    FilterBtn = Button(navbar2, cursor="hand2", text="⚙️", bg="#eee", font=('MS Sans Serif', 14), padx=25, activeforeground="#123670", activebackground="#dedfe0", command=lambda: filterArticles(dropdownIndex, article1))
+    FilterBtn = Button(navbar2, cursor="hand2", text="⚙️", bg="#eee", font=('MS Sans Serif', 14), padx=25, activeforeground="#123670", activebackground="#dedfe0", command=lambda: [filterArticles(dropdownIndex),  nextBtn.tkraise(), backBtn.tkraise()])
     FilterBtn.grid(column=9, row=0, pady=10, padx=10)
+
+    RefreshArticleBtn=Button(root, cursor="hand2", text="Refresh", bg="#eee", command=lambda: [randomArticles(), loadArticles(random.randint(0,99)), nextBtn.tkraise(), backBtn.tkraise()])
+    RefreshArticleBtn.place(x=300, y=655)
 
     navbar2.grid_columnconfigure(0, weight=1, uniform="categories")
     navbar2.grid_columnconfigure(len(categories)+2, weight=1, uniform="categories")
@@ -172,11 +175,11 @@ def myNews():
     loadArticles(article1)
     def nextArticles():
         global article1
-        if article1<=homeartLen-2:
-            if article1 == 100:
+        if article1<=homeartLen-1:
+            if article1 == 99:
                 article1 = 0
             else:
-                article1=random.randint(0,99)
+                article1=article1+1
 
             loadArticles(article1)
         else:
@@ -184,10 +187,15 @@ def myNews():
 
     def backArticles():
         global article1
-        if article1 >= 1:
+        if article1<=homeartLen-1:
+            if article1 == 0:
+                article1 = 99
+            else:
+                article1=article1-1
 
-            article1=random.randint(0,99)
             loadArticles(article1)
+        else:
+            article1=99
 
     nextBtn=Button(root, text=">", fg="white", cursor="hand2", bg="#2367d9", font=('MS Sans Serif', 36, 'bold'), pady= 30, padx=20, activeforeground="#123670", activebackground="#dedfe0", command=lambda: nextArticles())
     backBtn=Button(root, text="<", fg="white", cursor="hand2", bg="#2367d9", font=('MS Sans Serif', 36, 'bold'), pady= 30, padx=20, activeforeground="#123670", activebackground="#dedfe0", command=lambda: backArticles())
@@ -207,10 +215,6 @@ def myNews():
         savedExit=Button(savedListBox, cursor="hand2", bg='red', text="🡨", font=('MS Sans Serif', 20), fg="white", height=1, width=5, command= lambda: SavedExit(savedExit))
         savedExit.place(x=26.5, y=7.8)
 
-        articles[article1].pack_forget()
-        nextBtn.place_forget()
-        backBtn.place_forget()
-        navbar2.pack_forget()
 
         for index, obj in enumerate(savedArr):
             box=Frame(savedListBox, bg="#205fc7", highlightbackground="black", highlightthickness=2, cursor="hand2", width=500)
