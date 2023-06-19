@@ -8,7 +8,7 @@ from newsapi import NewsApiClient
 from tempfile import NamedTemporaryFile
 import shutil
 
-apikey = "8451a189a10f47e3a7b4f02d6624be3f"
+apikey = "f9e757ccd2bc4d07b56cd2a79f4509cc"
 newsapi = NewsApiClient(api_key = apikey)
 
 from createWindow import root, dropdown, toggleDropdown,categories
@@ -205,7 +205,7 @@ def saveArticle(title, desc, url):
     savedArr = checkSavedTxt()
     for index, row in enumerate(savedArr):
         if row[2] == url:
-            messagebox.showerror("Error", "Article has already been saved.")
+            messagebox.showerror("Error", "Dublikātus saglabāt nav pieļaujams")
             return
     
     with open("files/savedList.txt", "a") as file:

@@ -30,7 +30,6 @@ def center(win):
     win.geometry('{}x{}+{}+{}'.format(width, height, x, y))
     win.deiconify()
 
-    
 
 def myNews():
     global root, content, article1, article2, categories, dropdown, reloadSavedList
@@ -39,15 +38,10 @@ def myNews():
     root = Tk()
     root.title("MyNews | NewsAPI")
 
-    #root.img = PhotoImage(file='images/news.png')
-    #root.iconphoto ( False, root.img)
-
     root.iconbitmap(root, "images/news.ico")
-
     root.resizable(0, 0)
 
-    screen_width = root.winfo_screenwidth()
-    screen_height = root.winfo_screenheight()
+
 
     dropdown = Frame(root, width=700, height=700, bg="#205fc7")
     root.minsize(1280, 720)
@@ -63,8 +57,7 @@ def myNews():
     navbar2.pack(anchor=N, fill="both", pady=0, padx=0)
     savedArr=checkSavedTxt()
     logo.place(relx=0.5, rely=0.5, anchor='center')
-    slogan.place(relx=0.5, rely=0.81, anchor='center')
-
+    slogan.place(relx=0.5, rely=0.82, anchor='center')
     def showDropdown(cat):
         global dropdown, toggleDropdown, dropdownIndex
         if toggleDropdown == False:
@@ -198,7 +191,6 @@ def myNews():
 
     nextBtn=Button(root, text=">", fg="white", cursor="hand2", bg="#2367d9", font=('MS Sans Serif', 36, 'bold'), pady= 30, padx=20, activeforeground="#123670", activebackground="#dedfe0", command=lambda: nextArticles())
     backBtn=Button(root, text="<", fg="white", cursor="hand2", bg="#2367d9", font=('MS Sans Serif', 36, 'bold'), pady= 30, padx=20, activeforeground="#123670", activebackground="#dedfe0", command=lambda: backArticles())
-    backBtn.place(x=50, y=600)
 
     nextBtn.place(x=1160, y=400)
     backBtn.place(x=21, y=400)
@@ -209,11 +201,11 @@ def myNews():
         global savedListBox, toggleDropdown
         toggleSaved=True
         savedArr=checkSavedTxt()
-        savedListBox=Frame(root, width=1000, height=720, bg="#205fc7", border=2)
+        savedListBox=Frame(root, width=1280, height=720, bg="#205fc7", border=2)
         savedListBox.place(x=0, y=200)
         savedList.grid_forget()
-        savedExit=Button(savedListBox, cursor="hand2", bg='red', text="🡨", font=('MS Sans Serif', 20), fg="white", height=1, width=5, command= lambda: [savedExit.destroy(),savedList.grid(column=0, row=0, pady= 10, padx=10), savedListBox.place_forget()])
-        savedExit.place(x=28, y=8)
+        savedExit=Button(savedListBox, cursor="hand2", bg='red', text="🡨", font=('MS Sans Serif', 20), fg="white", height=1, width=5, command= lambda: SavedExit(savedExit))
+        savedExit.place(x=26.5, y=7.8)
 
         articles[article1].pack_forget()
         nextBtn.place_forget()
@@ -221,11 +213,12 @@ def myNews():
         navbar2.pack_forget()
 
         for index, obj in enumerate(savedArr):
-            box=Frame(savedListBox, bg="#205fc7", highlightbackground="black", highlightthickness=2, cursor="hand2", padx=100)
-            box.pack(anchor=N)
+            box=Frame(savedListBox, bg="#205fc7", highlightbackground="black", highlightthickness=2, cursor="hand2", width=500)
+            box.pack(ipadx=100, ipady=20, padx=220, pady=15,
+          fill=BOTH, expand=True)
             box.bind("<Button-1>", lambda e, url=savedArr[index][2]: open_link(url))
-            title=Label(box, text=savedArr[index][0], fg="white", bg="#205fc7")
-            desc=Label(box, text=savedArr[index][1], fg="white", bg="#205fc7")
+            title=Label(box, text=savedArr[index][0], font=('MS Sans Serif', 12), fg="white", bg="#205fc7")
+            desc=Label(box, text=savedArr[index][1], font=('MS Sans Serif', 10), fg="white", bg="#205fc7")
             deleteBtn=Button(box, text="🗑️", bg="red", fg="black", command=lambda: [deleteArticle(savedArr[index][2]) , reloadSavedList()])
             deleteBtn.place(x=1, y=1)
             title.pack(anchor=NW)
@@ -237,6 +230,22 @@ def myNews():
         savedList.grid(column=0, row=0, pady= 10, padx=10)
         savedListBox.place_forget()
         openSavedList()
+
+    def SavedExit(savedExit):
+        savedExit.destroy()
+        savedList.grid(column=0, row=0, pady= 10, padx=10)
+        savedListBox.place_forget()
+
+        nextBtn.place(x=1160, y=400)
+        backBtn.place(x=21, y=400)
+
+        navbar2.pack(anchor=N, fill="both", pady=0, padx=0)
+        loadArticles(article1)
+
+
+        
+
+
 
 
     center(root)
