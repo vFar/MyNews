@@ -160,7 +160,7 @@ def myNews():
             Button(navbar2, padx=20, text="Sports", cursor="hand2", fg="white", bg="#2367d9", font=('MS Sans Serif', 14), activeforeground="#123670", activebackground="#dedfe0", command=lambda:showDropdown(5)),
             Button(navbar2, padx=20, text="Tehnoloģijas", cursor="hand2", fg="white", bg="#2367d9", font=('MS Sans Serif', 14), activeforeground="#123670", activebackground="#dedfe0", command=lambda:showDropdown(6))]
     
-    FilterBtn = Button(navbar2, cursor="hand2", text="Filtrēt", bg="#eee", font=('MS Sans Serif', 14), padx=25, activeforeground="#123670", activebackground="#dedfe0", command=lambda: filterArticles(dropdownIndex, article1))
+    FilterBtn = Button(navbar2, cursor="hand2", text="⚙️", bg="#eee", font=('MS Sans Serif', 14), padx=25, activeforeground="#123670", activebackground="#dedfe0", command=lambda: filterArticles(dropdownIndex, article1))
     FilterBtn.grid(column=9, row=0, pady=10, padx=10)
 
     navbar2.grid_columnconfigure(0, weight=1, uniform="categories")

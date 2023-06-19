@@ -109,7 +109,7 @@ def filterArticles(dpIndex, art1):
                 descriptions.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('Calibri', 13), bg="#205fc7", fg="white", text=article["description"])))
 
             # Load and display the updated articles
-              loadArticles(0, 1) 
+              loadArticles(0) 
 
           case 2:
               print(bCategories[dpIndex])  
@@ -139,7 +139,7 @@ def filterArticles(dpIndex, art1):
                 descriptions.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('Calibri', 13), bg="#205fc7", fg="white", text=article["description"])))
 
             # Load and display the updated articles
-              loadArticles(0, 1) 
+              loadArticles(0) 
           case 3:
               print(bCategories[dpIndex])  
               data = newsapi.get_everything(q=sub_cat[0]+" "+sub_cat[1]+" "+sub_cat[2],
@@ -168,7 +168,7 @@ def filterArticles(dpIndex, art1):
                 descriptions.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('Calibri', 13), bg="#205fc7", fg="white", text=article["description"])))
 
             # Load and display the updated articles
-              loadArticles(0, 1) 
+              loadArticles(0) 
 
           case 4:
               print(bCategories[dpIndex])  
@@ -198,7 +198,7 @@ def filterArticles(dpIndex, art1):
                 descriptions.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('Calibri', 13), bg="#205fc7", fg="white", text=article["description"])))
 
             # Load and display the updated articles
-              loadArticles(0, 1) 
+              loadArticles(0) 
 
     
 def saveArticle(title, desc, url):
