@@ -269,7 +269,7 @@ def saveArticle(title, desc, url):
             messagebox.showerror("Error", "Dublikātus saglabāt nav pieļaujams")
             return
     
-    with open(resource_path("savedList.txt", "a")) as file:
+    with open(resource_path("savedList.txt"), "a") as file:
         file.write(title + " | " + desc + " | " + url + "\n")
         
 
@@ -278,7 +278,7 @@ def deleteArticle(delUrl):
     print(delUrl," dele")
     # Create a temporary file
     with NamedTemporaryFile(mode='w', delete=False) as temp_file:
-        with open(resource_path("savedList.txt", "r")) as fp:
+        with open(resource_path("savedList.txt"), "r") as fp:
             for line in fp:
                 # Check if the line contains the given URL
                 if delUrl not in line:
