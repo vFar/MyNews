@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
-import datetime
+from datetime import datetime
+from datetime import timedelta
 from PIL import Image,ImageTk
 import random, webbrowser
 import os.path
@@ -8,10 +9,11 @@ from newsapi import NewsApiClient
 from tempfile import NamedTemporaryFile
 import shutil
 
-apikey = "f9e757ccd2bc4d07b56cd2a79f4509cc"
+
+apikey = "3977ef4fc46448dea8425d721248e1c3"
 newsapi = NewsApiClient(api_key = apikey)
 
-from createWindow import root, dropdown, toggleDropdown,categories
+from createWindow import root, dropdown, toggleDropdown,categories, date_from, date_to
 global articles, savedArr, homeart, homeartLen
 var1 = IntVar()
 var2 = IntVar()
@@ -27,6 +29,8 @@ navbar2 = Frame(root, bg='#205fc7', height=50, width=1920)
 
 logo = Label(navbar1, text="M   y   N   e   w   s", font=('MS Sans Serif', 28, 'bold'), bg='#174796', fg='white', pady=15, padx=200)
 slogan = Label(navbar1, text="Tiec informēts ar MyNews!", font=('MS Sans Serif', 14), bg='#205fc7', fg='#fcfcfc', pady=9, padx=120)
+
+
 
 
 def checkSavedTxt():
@@ -79,6 +83,17 @@ def filterArticles(dpIndex):
         var2.set(0)
         var3.set(0)
         var4.set(0)
+        if (date_from==None and date_to==None):
+            print("Datums nav")
+            current_date = datetime.now().date()
+            from_date = current_date - timedelta(days=28)
+            to_date = current_date
+            from_param = from_date.strftime('%Y-%m-%d')
+            to = to_date.strftime('%Y-%m-%d')
+        else:
+            print("datums ir")
+            from_param=date_from
+            to=date_to
         match catLen:
         
           case 1:
@@ -89,7 +104,6 @@ def filterArticles(dpIndex):
                                   language='en',
                                   sort_by='relevancy')
               homeart = data['articles']
-              print(sub_cat)
 
             # Clear existing articles, titles, and descriptions
               for article in articles:
@@ -201,8 +215,44 @@ def filterArticles(dpIndex):
               loadArticles(random.randint(0,99)) 
 
     
+def filterInterval(date_from_in, date_to_in, result):
+    global date_from, date_to
+    date_from = date_from_in.get()
+    date_to = date_to_in.get()
+
+    # Convert input strings to datetime objects
+    try:
+        date_from_obj = datetime.strptime(date_from, "%Y-%m-%d")
+        date_to_obj = datetime.strptime(date_to, "%Y-%m-%d")
+    except ValueError:
+        result.config(text="Invalid date format!")
+        current_date = datetime.now().date()
+        from_date = current_date - timedelta(days=28)
+        to_date = current_date
+
+# Convert the date objects to strings in the required format
+        from_param = from_date.strftime('%Y-%m-%d')
+        to = to_date.strftime('%Y-%m-%d')
+        return
+
+    # Calculate the difference in days
+    date_diff = (date_to_obj - date_from_obj).days
+
+    # Check if the date range is within 28 days
+    if date_diff > 28:
+        result.config(text="Date range exceeds 28 days!")
+        current_date = datetime.now().date()
+        from_date = current_date - timedelta(days=28)
+        to_date = current_date
+
+# Convert the date objects to strings in the required format
+        from_param = from_date.strftime('%Y-%m-%d')
+        to = to_date.strftime('%Y-%m-%d')
+    else:
+        result.config(text="Valid date range")
 def saveArticle(title, desc, url):
     savedArr = checkSavedTxt()
+    print(title)
     for index, row in enumerate(savedArr):
         if row[2] == url:
             messagebox.showerror("Error", "Dublikātus saglabāt nav pieļaujams")
@@ -214,6 +264,7 @@ def saveArticle(title, desc, url):
 
 
 def deleteArticle(delUrl):
+    print(delUrl," dele")
     # Create a temporary file
     with NamedTemporaryFile(mode='w', delete=False) as temp_file:
         with open("files/savedList.txt", "r") as fp:
@@ -232,12 +283,13 @@ def loadArticles(article1):
 
   for  i, article in enumerate(homeart):
     articles[i].pack_forget()
-
-  saveBtn1 = Button(root, text="💾", fg="black", bg="white", font=('MS Sans Serif', 16), width=20, height=1, command=lambda: saveArticle(homeart[article1]['title'], homeart[article1]['description'], homeart[article1]['url']))
+  print(titles[article1].cget("text"))
+  saveBtn1 = Button(root, text="💾", fg="black", bg="white", font=('MS Sans Serif', 16), width=20, height=1, command=lambda: saveArticle(titles[article1].cget("text"), descriptions[article1].cget("text"), urls[article1]))
 
   articles[article1].pack(pady=84)
   titles[article1].place(x=160, y=40)
   descriptions[article1].place(x=160, y=85)
+  
   saveBtn1.place(x=550, y=655)
 
   print(article1)
@@ -264,8 +316,8 @@ bSub_categories=[["Finance", "Marketing", "Management", "E-commerce"],
 def open_link(url):
     webbrowser.open_new(url)
 
-current_date = datetime.date.today()
-from_date = current_date - datetime.timedelta(days=28)
+current_date = datetime.now().date()
+from_date = current_date - timedelta(days=28)
 to_date = current_date
 
 # Convert the date objects to strings in the required format

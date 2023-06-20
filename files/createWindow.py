@@ -3,6 +3,7 @@ from PIL import Image, ImageTk
 import os.path
 import ctypes
 import random
+from datetime import datetime, timedelta
 
 root = None
 body = None
@@ -15,6 +16,8 @@ dropdownIndex = None
 categories = []
 bCategories = []
 toggleSaved=False
+date_from = None
+date_to = None
 
 
 def center(win):
@@ -32,7 +35,7 @@ def center(win):
 
 
 def myNews():
-    global root, content, article1, article2, categories, dropdown, reloadSavedList
+    global root, content, article1, article2, categories, dropdown, reloadSavedList, date_from_in, date_to_in, result
     savedArr=[]
 
     root = Tk()
@@ -43,13 +46,13 @@ def myNews():
 
 
 
-    dropdown = Frame(root, width=700, height=700, bg="#205fc7")
+    dropdown = Frame(root, width=700, height=700, bg="#205fc7", highlightbackground="black", highlightthickness=1)
     root.minsize(1280, 720)
     root.maxsize(1920, 1080)
     root.geometry('1280x720')
     root.configure(bg="white")
 
-    from contents import navbar1,navbar2,slogan, logo, content, loadArticles, sub_categories, filterArticles, homeartLen, articles, checkSavedTxt, open_link, deleteArticle, randomArticles
+    from contents import navbar1,navbar2,slogan, logo, content, loadArticles, sub_categories, filterArticles, homeartLen, articles, checkSavedTxt, open_link, deleteArticle, randomArticles, filterInterval
     
     article1 = random.randint(0, 99)
 
@@ -152,12 +155,31 @@ def myNews():
             Button(navbar2, padx=20, text="Zinātne", cursor="hand2", fg="white", bg="#2367d9", font=('MS Sans Serif', 14), activeforeground="#123670", activebackground="#dedfe0", command=lambda:showDropdown(4)),
             Button(navbar2, padx=20, text="Sports", cursor="hand2", fg="white", bg="#2367d9", font=('MS Sans Serif', 14), activeforeground="#123670", activebackground="#dedfe0", command=lambda:showDropdown(5)),
             Button(navbar2, padx=20, text="Tehnoloģijas", cursor="hand2", fg="white", bg="#2367d9", font=('MS Sans Serif', 14), activeforeground="#123670", activebackground="#dedfe0", command=lambda:showDropdown(6))]
-    
+
     FilterBtn = Button(navbar2, cursor="hand2", text="⚙️", bg="#eee", font=('MS Sans Serif', 14), padx=25, activeforeground="#123670", activebackground="#dedfe0", command=lambda: [filterArticles(dropdownIndex),  nextBtn.tkraise(), backBtn.tkraise()])
     FilterBtn.grid(column=9, row=0, pady=10, padx=10)
 
     RefreshArticleBtn=Button(root, cursor="hand2", text="Refresh", bg="#eee", command=lambda: [randomArticles(), loadArticles(random.randint(0,99)), nextBtn.tkraise(), backBtn.tkraise()])
     RefreshArticleBtn.place(x=300, y=655)
+    calendarBox=Frame(root, bg="black")
+    calendarBox.place(x=800, y=655)
+    date_from = Label(calendarBox, text="Date From:")
+    date_from.grid(column=0, row=0)
+    date_from_in = Entry(calendarBox)
+    date_from_in.grid(column=1, row=0)
+
+    date_to = Label(calendarBox, text="Date To:")
+    date_to.grid(column=0, row=1)
+    date_to_in = Entry(calendarBox)
+    date_to_in.grid(column=1, row=1)
+
+# Create a button to trigger the date range validation
+    submit_button = Button(calendarBox, text="Submit", command= lambda: filterInterval(date_from_in, date_to_in, result))
+    submit_button.grid(column=2, row=1)
+
+# Create a label to display the result
+    result = Label(calendarBox, text="")
+    result.grid(column=3, row=0)
 
     navbar2.grid_columnconfigure(0, weight=1, uniform="categories")
     navbar2.grid_columnconfigure(len(categories)+2, weight=1, uniform="categories")
@@ -206,13 +228,16 @@ def myNews():
     
     
     def openSavedList():
-        global savedListBox, toggleDropdown
+        global savedListBox, toggleDropdown, savedBG
         toggleSaved=True
         savedArr=checkSavedTxt()
-        savedListBox=Frame(root, width=1280, height=720, bg="#205fc7", border=2)
+        savedBG=Frame(root, width=1280, height=720, bg="white")
+        savedBG.place(x=0, y=200)
+        savedListBox=Frame(root, width=1280, height=720, bg="#205fc7", border=2, highlightbackground="black", highlightthickness=1)
         savedListBox.place(x=0, y=200)
+        savedListBox.tkraise()
         savedList.grid_forget()
-        savedExit=Button(savedListBox, cursor="hand2", bg='red', text="🡨", font=('MS Sans Serif', 20), fg="white", height=1, width=5, command= lambda: SavedExit(savedExit))
+        savedExit=Button(savedListBox, cursor="hand2", bg='red', text="🡨", font=('MS Sans Serif', 20), fg="white", height=1, width=5, command= lambda: [ savedBG.place_forget(),SavedExit(savedExit)])
         savedExit.place(x=26.5, y=7.8)
 
 
@@ -221,10 +246,11 @@ def myNews():
             box.pack(ipadx=100, ipady=20, padx=220, pady=15,
           fill=BOTH, expand=True)
             box.bind("<Button-1>", lambda e, url=savedArr[index][2]: open_link(url))
-            title=Label(box, text=savedArr[index][0], font=('MS Sans Serif', 12), fg="white", bg="#205fc7")
-            desc=Label(box, text=savedArr[index][1], font=('MS Sans Serif', 10), fg="white", bg="#205fc7")
-            deleteBtn=Button(box, text="🗑️", bg="red", fg="black", command=lambda: [deleteArticle(savedArr[index][2]) , reloadSavedList()])
-            deleteBtn.place(x=1, y=1)
+            title=Label(box, text=savedArr[index][0],justify="left", font=('MS Sans Serif', 12), fg="white", bg="#205fc7")
+            desc=Label(box, text=savedArr[index][1],justify="left", font=('MS Sans Serif', 10), fg="white", bg="#205fc7", wraplength=700)
+            deleteBtn=Button(box, text="🗑️", bg="red", fg="black", command=lambda url=savedArr[index][2]: [deleteArticle(url) , reloadSavedList()])
+            print(savedArr[index][2]," save")
+            deleteBtn.place(x=700, y=25)
             title.pack(anchor=NW)
             title.bind("<Button-1>", lambda e, url=savedArr[index][2]: open_link(url))
             desc.pack(anchor=W)
@@ -233,12 +259,14 @@ def myNews():
     def reloadSavedList():
         savedList.grid(column=0, row=0, pady= 10, padx=10)
         savedListBox.place_forget()
+        savedBG.place_forget()
         openSavedList()
 
     def SavedExit(savedExit):
         savedExit.destroy()
         savedList.grid(column=0, row=0, pady= 10, padx=10)
         savedListBox.place_forget()
+        savedBG.place_forget()
 
         nextBtn.place(x=1160, y=400)
         backBtn.place(x=21, y=400)
