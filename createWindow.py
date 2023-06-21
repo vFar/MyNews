@@ -174,25 +174,40 @@ def myNews():
     FilterBtn = Button(navbar2, cursor="hand2", text="⚙️", bg="#eee", font=('MS Sans Serif', 14), padx=25, activeforeground="#123670", activebackground="#dedfe0", command=lambda: [filterArticles(dropdownIndex, date_from_in, date_to_in, result),  nextBtn.tkraise(), backBtn.tkraise()])
     FilterBtn.grid(column=9, row=0, pady=10, padx=10)
 
-    RefreshArticleBtn=Button(root, cursor="hand2", text="↻", bg="#2671eb", fg='black', foreground='white', width=5, height=1, font=('MS Sans Serif', 16), command=lambda: [randomArticles(), loadArticles(random.randint(0,99)), nextBtn.tkraise(), backBtn.tkraise()])
+    RefreshArticleBtn=Button(root, cursor="hand2", text="↻", bg="#2671eb", fg='black', foreground='white', width=5, height=1, font=('MS Sans Serif', 16), command=lambda: [randomArticles(), loadArticles(random.randint(0,99)), nextBtn.tkraise(), backBtn.tkraise(), RefreshArticleBtn.tkraise()])
     RefreshArticleBtn.place(x=25, y=655)
     calendarBox=Frame(root, bg="black")
     calendarBox.place(x=800, y=655)
-    date_from = Label(root, text="Datums no:")
+    date_from = Label(root, text="Datums no:", font=('MS Sans Serif', 10, 'bold'))
     date_from.pack()
-    date_from_in = Entry(root)
+    date_from_in = Entry(root, font=('MS Sans Serif', 10), bg='#dedede')
     date_from_in.pack()
 
-    date_to = Label(root, text="Datums līdz:")
+    date_to = Label(root, text="Datums līdz:", font=('MS Sans Serif', 10, 'bold'))
     date_to.pack()
-    date_to_in = Entry(root)
+    date_to_in = Entry(root, font=('MS Sans Serif', 10), bg='#dedede')
     date_to_in.pack()
 
-    result = Label(root, text="")
-    result.pack()
+    result = Label(root, text="", font=('MS Sans Serif', 14))
+    result.pack(pady=10)
    
 
-   
+
+    def datefromin(event):
+        date_from_in.config(state=NORMAL)
+        date_from_in.delete(0, END)
+    
+    date_from_in.insert(0, 'YYYY-MM-DD')
+    date_from_in.config(state=DISABLED)
+    date_from_in.bind("<Button-1>", datefromin)
+
+    def datetoin(event):
+        date_to_in.config(state=NORMAL)
+        date_to_in.delete(0, END)
+    
+    date_to_in.insert(0, 'YYYY-MM-DD')
+    date_to_in.config(state=DISABLED)
+    date_to_in.bind("<Button-1>", datetoin)
 
 
     navbar2.grid_columnconfigure(0, weight=1, uniform="categories")
@@ -236,61 +251,81 @@ def myNews():
     nextBtn=Button(root, text=">", fg="white", cursor="hand2", bg="#2367d9", font=('MS Sans Serif', 36, 'bold'), pady= 30, padx=20, activeforeground="#123670", activebackground="#dedfe0", command=lambda: nextArticles())
     backBtn=Button(root, text="<", fg="white", cursor="hand2", bg="#2367d9", font=('MS Sans Serif', 36, 'bold'), pady= 30, padx=20, activeforeground="#123670", activebackground="#dedfe0", command=lambda: backArticles())
 
-    nextBtn.place(x=1160, y=400)
-    backBtn.place(x=21, y=400)
+    nextBtn.place(x=1160, y=430)
+    backBtn.place(x=21, y=430)
 
     
     
     def openSavedList():
         global savedListBox, toggleDropdown, savedBG
-        toggleSaved=True
-        savedArr=checkSavedTxt()
-        savedBG=Frame(root, width=1280, height=720, bg="white")
-        savedBG.place(x=0, y=200)
-       
-        savedListBox=Frame(root, width=1280, height=720, bg="#205fc7", border=2, highlightbackground="black", highlightthickness=1)
-        savedListBox.place(x=0, y=200)
-        savedListBox.tkraise()
-        savedList.grid_forget()
-        savedExit=Button(savedListBox, cursor="hand2", bg='red', text="🡨", font=('MS Sans Serif', 20), fg="white", height=1, width=5, command= lambda: [ savedBG.place_forget(),SavedExit(savedExit)])
+        toggleSaved = True
+        savedArr = checkSavedTxt()
+        savedBG = Frame(root, bg="#205fc7")
+        savedBG.place(x=0, y=0, relwidth=1, relheight=1)  # Place at top-left and fill the entire screen
+
+        canvas = Canvas(savedBG, bg="#205fc7")
+        canvas.pack(side='left', fill='both', expand=True)
+        canvas.bind_all("<MouseWheel>", lambda event: canvas.yview_scroll(int(-1 * (event.delta / 120)), "units"))  # Enable scrolling with mouse wheel
+
+        savedListBox = Frame(canvas, bg="#205fc7")
+        savedListBox.pack(side='left', fill='both', expand=True)
+
+        savedExit = Button(savedListBox, cursor="hand2", bg='red', text="🡨", font=('MS Sans Serif', 20), fg="white",
+                        height=1, width=5, command=lambda: [savedBG.place_forget(), SavedExit(savedExit)])
         savedExit.place(x=26.5, y=7.8)
+
+        if len(savedArr) == 0:  # No saved entries
+            noSavedLabel = Label(savedListBox, text="Saraksts ir tukšs :(", font=('MS Sans Serif', 12, 'bold'), fg="white",
+                                bg="#205fc7")
+            noSavedLabel.pack(pady=50)
+
+        if len(savedArr) > 4:  # Enable scrollbar only if there are saved entries
+            v_scrollbar = Scrollbar(savedListBox, orient='vertical', command=canvas.yview)
+            v_scrollbar.pack(side='right', fill='y')
+
+            canvas.configure(yscrollcommand=v_scrollbar.set)
+            canvas.create_window((0, 0), window=savedListBox, anchor='nw')
+
+            savedListBox.bind("<Configure>", lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
 
 
         for index, obj in enumerate(savedArr):
-            box=Frame(savedListBox, bg="#205fc7", highlightbackground="black", highlightthickness=2, cursor="hand2", width=500)
-            box.pack(ipadx=100, ipady=20, padx=220, pady=15,
-          fill=BOTH, expand=True)
+            box = Frame(savedListBox, bg="#2369db", cursor="hand2", borderwidth=2, relief='raised',
+                        width=500)
+            box.pack(ipadx=100, ipady=20, padx=220, pady=15, fill=BOTH, expand=True)
             box.bind("<Button-1>", lambda e, url=savedArr[index][2]: open_link(url))
-            title=Label(box, text=savedArr[index][0],justify="left", font=('MS Sans Serif', 12), fg="white", bg="#205fc7")
-            desc=Label(box, text=savedArr[index][1],justify="left", font=('MS Sans Serif', 10), fg="white", bg="#205fc7", wraplength=700)
-            deleteBtn=Button(box, text="🗑️", bg="red", fg="black", command=lambda url=savedArr[index][2]: [deleteArticle(url) , reloadSavedList()])
-            print(savedArr[index][2]," save")   
-            deleteBtn.place(x=700, y=25)
-            title.pack(anchor=NW)
+            title = Label(box, text=savedArr[index][0], justify="left", font=('MS Sans Serif', 14, 'underline'), wraplength=700, bg="#2369db", fg='white')
+            desc = Label(box, text=savedArr[index][1], justify="left", font=('MS Sans Serif', 10), wraplength=700, bg="#2369db", fg='white')
+            deleteBtn = Button(box, text="-", bg="red", fg="white", font=('MS Sans Serif', 16, 'bold'), height=1, width=2,  
+                            command=lambda url=savedArr[index][2]: [deleteArticle(url), reloadSavedList()])
+            print(savedArr[index][2], " save")
+            deleteBtn.place(x=780, y=25)
+            title.pack(anchor=NW, pady=10, padx=30)
             title.bind("<Button-1>", lambda e, url=savedArr[index][2]: open_link(url))
-            desc.pack(anchor=W)
+            desc.pack(anchor=W, padx=30)
             desc.bind("<Button-1>", lambda e, url=savedArr[index][2]: open_link(url))
-        
-    def reloadSavedList():
-        savedList.grid(column=0, row=0, pady= 10, padx=10)
-        savedListBox.place_forget()
-        savedBG.place_forget()
-        openSavedList()
-
-    def SavedExit(savedExit):
-        savedExit.destroy()
-        savedList.grid(column=0, row=0, pady= 10, padx=10)
-        savedListBox.place_forget()
-        savedBG.place_forget()
-
-        nextBtn.place(x=1160, y=400)
-        backBtn.place(x=21, y=400)
-
-        navbar2.pack(anchor=N, fill="both", pady=0, padx=0)
-        loadArticles(article1)
 
 
-        
+            
+
+        def reloadSavedList():
+            savedList.grid(column=0, row=0, pady=10, padx=10)
+            savedListBox.place_forget()
+            savedBG.place_forget()
+            openSavedList()
+
+        def SavedExit(savedExit):
+            savedExit.destroy()
+            savedList.grid(column=0, row=0, pady=10, padx=10)
+            savedListBox.place_forget()
+            savedBG.place_forget()
+
+            nextBtn.place(x=1160, y=430)
+            backBtn.place(x=21, y=430)
+
+            navbar2.pack(anchor=N, fill="both", pady=0, padx=0)
+            loadArticles(article1)
+    
 
 
 
