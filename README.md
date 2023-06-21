@@ -10,4 +10,4 @@
 - Dod iespēju nejaušā secībā atsvaidzināt artikulas
 - Dod iespēju saglabāt artikulas saglabāšanas sarakstā
 - Dod iespēju izdzēst artikulas no saglabāšanas saraksta
-### Programmatūra tiek veidota Retro stilā(Windows 98 stilā), kā arī programmatūra atlasa artikulas tikai angļu valodā.
+### Programmatūra tiek veidota Retro stilā(Windows 98, Windows XP stilā), kā arī programmatūra atlasa artikulas tikai angļu valodā.
