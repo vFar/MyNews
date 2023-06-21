@@ -174,7 +174,7 @@ def myNews():
     FilterBtn = Button(navbar2, cursor="hand2", text="⚙️", bg="#eee", font=('MS Sans Serif', 14), padx=25, activeforeground="#123670", activebackground="#dedfe0", command=lambda: [filterArticles(dropdownIndex, date_from_in, date_to_in, result),  nextBtn.tkraise(), backBtn.tkraise()])
     FilterBtn.grid(column=9, row=0, pady=10, padx=10)
 
-    RefreshArticleBtn=Button(root, cursor="hand2", text="↻", bg="#2671eb", fg='black', foreground='white', width=5, height=1, font=('MS Sans Serif', 16), command=lambda: [randomArticles(), loadArticles(random.randint(0,99)), nextBtn.tkraise(), backBtn.tkraise()])
+    RefreshArticleBtn=Button(root, cursor="hand2", text="↻", bg="#2671eb", fg='black', foreground='white', width=5, height=1, font=('MS Sans Serif', 16), command=lambda: [randomArticles(), loadArticles(random.randint(0,99)), nextBtn.tkraise(), backBtn.tkraise(), RefreshArticleBtn.tkraise()])
     RefreshArticleBtn.place(x=25, y=655)
     calendarBox=Frame(root, bg="black")
     calendarBox.place(x=800, y=655)
@@ -188,7 +188,7 @@ def myNews():
     date_to_in = Entry(root, font=('MS Sans Serif', 10), bg='#dedede')
     date_to_in.pack()
 
-    result = Label(root, text="", font=('MS Sans Serif', 12, 'bold'))
+    result = Label(root, text="", font=('MS Sans Serif', 14))
     result.pack(pady=10)
    
 
@@ -320,8 +320,8 @@ def myNews():
             savedListBox.place_forget()
             savedBG.place_forget()
 
-            nextBtn.place(x=1160, y=400)
-            backBtn.place(x=21, y=400)
+            nextBtn.place(x=1160, y=430)
+            backBtn.place(x=21, y=430)
 
             navbar2.pack(anchor=N, fill="both", pady=0, padx=0)
             loadArticles(article1)

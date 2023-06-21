@@ -246,10 +246,10 @@ def filterInterval(date_from_in, date_to_in, result):
       date_to_obj = datetime.strptime(date_to, "%Y-%m-%d")
 
     except ValueError:
-
-      result.config(text=fromDat.strftime('%Y-%m-%d')+"  -  "+toDat.strftime('%Y-%m-%d'), relief='raised')
+      result.config(text="Datuma formāts ir nekorekts!", relief='raised')
       date_from=None
       date_to=None
+      return date_from, date_to
 
       # Calculate the difference in days
     date_diff = (date_to_obj - date_from_obj).days
