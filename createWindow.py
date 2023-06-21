@@ -178,27 +178,20 @@ def myNews():
     RefreshArticleBtn.place(x=25, y=655)
     calendarBox=Frame(root, bg="black")
     calendarBox.place(x=800, y=655)
-    date_from = Label(root, text="Datums no:")
+    date_from = Label(root, text="Datums no:", font=('MS Sans Serif', 10, 'bold'))
     date_from.pack()
-    date_from_in = Entry(root)
+    date_from_in = Entry(root, font=('MS Sans Serif', 10), bg='#dedede')
     date_from_in.pack()
 
-    date_to = Label(root, text="Datums līdz:")
+    date_to = Label(root, text="Datums līdz:", font=('MS Sans Serif', 10, 'bold'))
     date_to.pack()
-    date_to_in = Entry(root)
+    date_to_in = Entry(root, font=('MS Sans Serif', 10), bg='#dedede')
     date_to_in.pack()
 
-    result = Label(root, text="")
-    result.pack()
+    result = Label(root, text="", font=('MS Sans Serif', 12, 'bold'))
+    result.pack(pady=10)
    
 
-# Create a button to trigger the date range validation
-    submit_button = Button(calendarBox, text="Submit", command= lambda: filterInterval(date_from_in, date_to_in, result))
-    submit_button.grid(column=2, row=1)
-
-# Create a label to display the result
-    result = Label(calendarBox, text="")
-    result.grid(column=3, row=0)
 
     def datefromin(event):
         date_from_in.config(state=NORMAL)
@@ -258,8 +251,8 @@ def myNews():
     nextBtn=Button(root, text=">", fg="white", cursor="hand2", bg="#2367d9", font=('MS Sans Serif', 36, 'bold'), pady= 30, padx=20, activeforeground="#123670", activebackground="#dedfe0", command=lambda: nextArticles())
     backBtn=Button(root, text="<", fg="white", cursor="hand2", bg="#2367d9", font=('MS Sans Serif', 36, 'bold'), pady= 30, padx=20, activeforeground="#123670", activebackground="#dedfe0", command=lambda: backArticles())
 
-    nextBtn.place(x=1160, y=400)
-    backBtn.place(x=21, y=400)
+    nextBtn.place(x=1160, y=430)
+    backBtn.place(x=21, y=430)
 
     
     
