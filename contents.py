@@ -129,9 +129,9 @@ def filterArticles(dpIndex):
                 urls.insert(i, article["url"])
                 articles.insert(i, (Label(root, width=1000, height=250, bg="#205fc7", cursor="hand2")))
                 articles[i].bind("<Button-1>", lambda e, url=urls[i]: open_link(url))
-                titles.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('Calibri', 14, "underline"), bg="#205fc7", fg="white", text=article["title"])))
+                titles.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('MS Sans Serif', 14, "underline"), bg="#205fc7", fg="white", text=article["title"])))
                 titles[i].bind("<Button-1>", lambda e, url=urls[i]: open_link(url))
-                descriptions.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('Calibri', 13), bg="#205fc7", fg="white", text=article["description"])))
+                descriptions.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('MS Sans Serif', 13), bg="#205fc7", fg="white", text=article["description"])))
 
             # Load and display the updated articles
               loadArticles(random.randint(0,99)) 
@@ -159,9 +159,9 @@ def filterArticles(dpIndex):
                 urls.insert(i, article["url"])
                 articles.insert(i, (Label(root, width=1000, height=250, bg="#205fc7", cursor="hand2")))
                 articles[i].bind("<Button-1>", lambda e, url=urls[i]: open_link(url))
-                titles.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('Calibri', 14, "underline"), bg="#205fc7", fg="white", text=article["title"])))
+                titles.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('MS Sans Serif', 14, "underline"), bg="#205fc7", fg="white", text=article["title"])))
                 titles[i].bind("<Button-1>", lambda e, url=urls[i]: open_link(url))
-                descriptions.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('Calibri', 13), bg="#205fc7", fg="white", text=article["description"])))
+                descriptions.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('MS Sans Serif', 13), bg="#205fc7", fg="white", text=article["description"])))
 
             # Load and display the updated articles
               loadArticles(random.randint(0,99)) 
@@ -188,9 +188,9 @@ def filterArticles(dpIndex):
                 urls.insert(i, article["url"])
                 articles.insert(i, (Label(root, width=1000, height=250, bg="#205fc7", cursor="hand2")))
                 articles[i].bind("<Button-1>", lambda e, url=urls[i]: open_link(url))
-                titles.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('Calibri', 14, "underline"), bg="#205fc7", fg="white", text=article["title"])))
+                titles.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('MS Sans Serif', 14, "underline"), bg="#205fc7", fg="white", text=article["title"])))
                 titles[i].bind("<Button-1>", lambda e, url=urls[i]: open_link(url))
-                descriptions.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('Calibri', 13), bg="#205fc7", fg="white", text=article["description"])))
+                descriptions.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('MS Sans Serif', 13), bg="#205fc7", fg="white", text=article["description"])))
 
             # Load and display the updated articles
               loadArticles(random.randint(0,99)) 
@@ -218,9 +218,9 @@ def filterArticles(dpIndex):
                 urls.insert(i, article["url"])
                 articles.insert(i, (Label(root, width=1000, height=250, bg="#205fc7", cursor="hand2")))
                 articles[i].bind("<Button-1>", lambda e, url=urls[i]: open_link(url))
-                titles.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('Calibri', 14, "underline"), bg="#205fc7", fg="white", text=article["title"])))
+                titles.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('MS Sans Serif', 14, "underline"), bg="#205fc7", fg="white", text=article["title"])))
                 titles[i].bind("<Button-1>", lambda e, url=urls[i]: open_link(url))
-                descriptions.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('Calibri', 13), bg="#205fc7", fg="white", text=article["description"])))
+                descriptions.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('MS Sans Serif', 13), bg="#205fc7", fg="white", text=article["description"])))
 
             # Load and display the updated articles
               loadArticles(random.randint(0,99)) 
@@ -266,7 +266,7 @@ def saveArticle(title, desc, url):
     print(title)
     for index, row in enumerate(savedArr):
         if row[2] == url:
-            messagebox.showerror("Error", "Dublikātus saglabāt nav pieļaujams")
+            messagebox.showerror("Kļūda!", "Dublikātus saglabāt nav iespējams :(")
             return
     
     with open(resource_path("savedList.txt"), "a") as file:
