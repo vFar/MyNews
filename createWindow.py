@@ -193,7 +193,7 @@ def myNews():
    
 
 # Create a button to trigger the date range validation
-    submit_button = Button(calendarBox, text="Submit", command= lambda: filterInterval(date_from_in, date_to_in, result))
+    submit_button = Button(calendarBox, text="Submit", command= lambda: date_from_in.delete(0,'end'))
     submit_button.grid(column=2, row=1)
 
 # Create a label to display the result
