@@ -68,11 +68,12 @@ def checkSavedTxt():
 
 
 
-def filterArticles(dpIndex):
+def filterArticles(dpIndex, date_from_in, date_to_in, result):
+    dates=[]
     for index, other_button in enumerate(categories):
                         if index != 0:
                             other_button.config(state=NORMAL)
-
+    filterInterval(date_from_in, date_to_in, result)
     toggleDropdown = False
     dropdown.place_forget()
     selected = []
@@ -94,24 +95,25 @@ def filterArticles(dpIndex):
         var2.set(0)
         var3.set(0)
         var4.set(0)
+        print(from_date, " ", to_date)
         if (date_from==None and date_to==None):
             print("Datums nav")
             current_date = datetime.now().date()
-            from_date = current_date - timedelta(days=28)
-            to_date = current_date
-            from_param = from_date.strftime('%Y-%m-%d')
-            to = to_date.strftime('%Y-%m-%d')
+            fromDat = current_date - timedelta(days=28)
+            toDat = current_date
+            noDat = fromDat.strftime('%Y-%m-%d')
+            lidzDat = toDat.strftime('%Y-%m-%d')
         else:
-            print("datums ir")
-            from_param=date_from
-            to=date_to
+            noDat=date_from
+            lidzDat=date_to
+            print(noDat, " ", lidzDat)
         match catLen:
         
           case 1:
               print(bCategories[dpIndex])  
               data = newsapi.get_everything(q=sub_cat[0],
-                                  from_param=from_param,
-                                  to=to,
+                                  from_param=noDat,
+                                  to=lidzDat,
                                   language='en',
                                   sort_by='relevancy')
               homeart = data['articles']
@@ -139,8 +141,8 @@ def filterArticles(dpIndex):
           case 2:
               print(bCategories[dpIndex])  
               data = newsapi.get_everything(q=sub_cat[0]+" "+sub_cat[1],
-                                  from_param='2023-06-01',
-                                  to='2023-06-15',
+                                  from_param=noDat,
+                                  to=lidzDat,
                                   language='en',
                                   sort_by='relevancy')
               homeart = data['articles']
@@ -168,8 +170,8 @@ def filterArticles(dpIndex):
           case 3:
               print(bCategories[dpIndex])  
               data = newsapi.get_everything(q=sub_cat[0]+" "+sub_cat[1]+" "+sub_cat[2],
-                                  from_param='2023-06-01',
-                                  to='2023-06-15',
+                                  from_param=noDat,
+                                  to=from_date,
                                   language='en',
                                   sort_by='relevancy')
               homeart = data['articles']
@@ -198,8 +200,8 @@ def filterArticles(dpIndex):
           case 4:
               print(bCategories[dpIndex])  
               data = newsapi.get_everything(q=sub_cat[0]+" "+sub_cat[1]+" "+sub_cat[2]+" "+sub_cat[3],
-                                  from_param='2023-06-01',
-                                  to='2023-06-15',
+                                  from_param=noDat,
+                                  to=lidzDat,
                                   language='en',
                                   sort_by='relevancy')
               homeart = data['articles']
@@ -224,6 +226,7 @@ def filterArticles(dpIndex):
 
             # Load and display the updated articles
               loadArticles(random.randint(0,99)) 
+            
 
     
 def filterInterval(date_from_in, date_to_in, result):
@@ -231,36 +234,44 @@ def filterInterval(date_from_in, date_to_in, result):
     date_from = date_from_in.get()
     date_to = date_to_in.get()
 
-    # Convert input strings to datetime objects
     try:
-        date_from_obj = datetime.strptime(date_from, "%Y-%m-%d")
-        date_to_obj = datetime.strptime(date_to, "%Y-%m-%d")
+          date_from_obj = datetime.strptime(date_from, "%Y-%m-%d")
+          date_to_obj = datetime.strptime(date_to, "%Y-%m-%d")
     except ValueError:
-        result.config(text="Invalid date format!")
-        current_date = datetime.now().date()
-        from_date = current_date - timedelta(days=28)
-        to_date = current_date
+          result.config(text="Tiek pārraidīts mēneša intervāls")
+          date_from=None
+          date_to=None
+          return date_from, date_to
 
-# Convert the date objects to strings in the required format
-        from_param = from_date.strftime('%Y-%m-%d')
-        to = to_date.strftime('%Y-%m-%d')
+      # Calculate the difference in days
+    date_diff = (date_to_obj - date_from_obj).days
+    current_date = datetime.now()
+    min_date = current_date - timedelta(days=28)
+
+    if date_from_obj > current_date:
+        result.config(text="Neprecīzs datums: Datums nedrīkst būt nākotnei (tiek pārraidīts mēneša intervālā)!")
+        date_from=None
+        date_to=None
+        return
+    elif date_to_obj > current_date:
+        result.config(text="Neprecīzs datums: Datums nedrīkst būt nākotnei (tiek pārraidīts mēneša intervālā)!")
+        date_from=None
+        date_to=None
+        return
+    elif date_from_obj > date_to_obj:
+        result.config(text="Neprecīzs datuma kārtojums(tiek pārraidīts mēneša intervālā)!")
+        date_from=None
+        date_to=None
+        return
+    elif date_from_obj < min_date:
+        result.config(text="Neprecīzs datums: Datumam jābūt starp mēneša intervālam(tiek pārraidīts mēneša intervālā)!")
+        date_from=None
+        date_to=None
         return
 
-    # Calculate the difference in days
-    date_diff = (date_to_obj - date_from_obj).days
-
-    # Check if the date range is within 28 days
-    if date_diff > 28:
-        result.config(text="Date range exceeds 28 days!")
-        current_date = datetime.now().date()
-        from_date = current_date - timedelta(days=28)
-        to_date = current_date
-
-# Convert the date objects to strings in the required format
-        from_param = from_date.strftime('%Y-%m-%d')
-        to = to_date.strftime('%Y-%m-%d')
     else:
-        result.config(text="Valid date range")
+          result.config(text="Precīzs datums: "+date_from+" - "+date_to)
+
 def saveArticle(title, desc, url):
     savedArr = checkSavedTxt()
     print(title)
