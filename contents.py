@@ -73,6 +73,9 @@ def filterArticles(dpIndex, date_from_in, date_to_in, result):
                         if index != 0:
                             other_button.config(state=NORMAL)
     filterInterval(date_from_in, date_to_in, result)
+    date_from_in.delete(0,'end')
+    date_to_in.delete(0,'end')
+    toggleDropdown = False
     dropdown.place_forget()
     selected = []
     sub_cat = []
@@ -232,10 +235,12 @@ def filterInterval(date_from_in, date_to_in, result):
 
     date_from = date_from_in.get()
     date_to = date_to_in.get()
-    current_date = datetime.now().date()
-    fromDat = current_date - timedelta(days=28)
-    toDat = current_date
-
+    print(date_from," uwu", date_to)
+    if(((date_from=="YYYY-MM-DD" and date_to=="YYYY-MM-DD") or (date_from=="YYYY-MM-DD" or date_to=="YYYY-MM-DD")) or ((date_from=="" and date_to=="") or (date_from=="" or date_to==""))):
+        result.config(text="Tiek pārraidīts mēneša intervāls")
+        date_from=None
+        date_to=None
+        return date_from, date_to
     try:
       date_from_obj = datetime.strptime(date_from, "%Y-%m-%d")
       date_to_obj = datetime.strptime(date_to, "%Y-%m-%d")
