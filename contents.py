@@ -238,7 +238,7 @@ def filterInterval(date_from_in, date_to_in, result):
           date_from_obj = datetime.strptime(date_from, "%Y-%m-%d")
           date_to_obj = datetime.strptime(date_to, "%Y-%m-%d")
     except ValueError:
-          result.config(text="Invalid date format!")
+          result.config(text="Tiek pārraidīts mēneša intervāls")
           date_from=None
           date_to=None
           return date_from, date_to
