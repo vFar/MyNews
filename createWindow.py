@@ -31,6 +31,8 @@ bCategories = []
 toggleSaved=False
 date_from = None
 date_to = None
+date_from_in=None
+date_to_in=None
 
 
 def center(win):
@@ -169,30 +171,28 @@ def myNews():
             Button(navbar2, padx=20, text="Sports", cursor="hand2", fg="white", bg="#2367d9", font=('MS Sans Serif', 14), activeforeground="#123670", activebackground="#dedfe0", command=lambda:showDropdown(5)),
             Button(navbar2, padx=20, text="Tehnoloģijas", cursor="hand2", fg="white", bg="#2367d9", font=('MS Sans Serif', 14), activeforeground="#123670", activebackground="#dedfe0", command=lambda:showDropdown(6))]
 
-    FilterBtn = Button(navbar2, cursor="hand2", text="⚙️", bg="#eee", font=('MS Sans Serif', 14), padx=25, activeforeground="#123670", activebackground="#dedfe0", command=lambda: [filterArticles(dropdownIndex),  nextBtn.tkraise(), backBtn.tkraise()])
+    FilterBtn = Button(navbar2, cursor="hand2", text="⚙️", bg="#eee", font=('MS Sans Serif', 14), padx=25, activeforeground="#123670", activebackground="#dedfe0", command=lambda: [filterArticles(dropdownIndex, date_from_in, date_to_in, result),  nextBtn.tkraise(), backBtn.tkraise()])
     FilterBtn.grid(column=9, row=0, pady=10, padx=10)
 
     RefreshArticleBtn=Button(root, cursor="hand2", text="↻", bg="#2671eb", fg='black', foreground='white', width=5, height=1, font=('MS Sans Serif', 16), command=lambda: [randomArticles(), loadArticles(random.randint(0,99)), nextBtn.tkraise(), backBtn.tkraise()])
     RefreshArticleBtn.place(x=25, y=655)
     calendarBox=Frame(root, bg="black")
     calendarBox.place(x=800, y=655)
-    date_from = Label(calendarBox, text="Date From:")
-    date_from.grid(column=0, row=0)
-    date_from_in = Entry(calendarBox)
-    date_from_in.grid(column=1, row=0)
+    date_from = Label(root, text="Datums no:")
+    date_from.pack()
+    date_from_in = Entry(root)
+    date_from_in.pack()
 
-    date_to = Label(calendarBox, text="Date To:")
-    date_to.grid(column=0, row=1)
-    date_to_in = Entry(calendarBox)
-    date_to_in.grid(column=1, row=1)
+    date_to = Label(root, text="Datums līdz:")
+    date_to.pack()
+    date_to_in = Entry(root)
+    date_to_in.pack()
 
-# Create a button to trigger the date range validation
-    submit_button = Button(calendarBox, text="Submit", command= lambda: filterInterval(date_from_in, date_to_in, result))
-    submit_button.grid(column=2, row=1)
+    result = Label(root, text="")
+    result.pack()
+   
 
-# Create a label to display the result
-    result = Label(calendarBox, text="")
-    result.grid(column=3, row=0)
+   
 
 
     navbar2.grid_columnconfigure(0, weight=1, uniform="categories")
@@ -247,6 +247,7 @@ def myNews():
         savedArr=checkSavedTxt()
         savedBG=Frame(root, width=1280, height=720, bg="white")
         savedBG.place(x=0, y=200)
+       
         savedListBox=Frame(root, width=1280, height=720, bg="#205fc7", border=2, highlightbackground="black", highlightthickness=1)
         savedListBox.place(x=0, y=200)
         savedListBox.tkraise()
@@ -263,7 +264,7 @@ def myNews():
             title=Label(box, text=savedArr[index][0],justify="left", font=('MS Sans Serif', 12), fg="white", bg="#205fc7")
             desc=Label(box, text=savedArr[index][1],justify="left", font=('MS Sans Serif', 10), fg="white", bg="#205fc7", wraplength=700)
             deleteBtn=Button(box, text="🗑️", bg="red", fg="black", command=lambda url=savedArr[index][2]: [deleteArticle(url) , reloadSavedList()])
-            print(savedArr[index][2]," save")
+            print(savedArr[index][2]," save")   
             deleteBtn.place(x=700, y=25)
             title.pack(anchor=NW)
             title.bind("<Button-1>", lambda e, url=savedArr[index][2]: open_link(url))
