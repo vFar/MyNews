@@ -21,7 +21,7 @@ def resource_path(relative_path):
 
     return os.path.join(base_path, relative_path)
 
-apikey = "8451a189a10f47e3a7b4f02d6624be3f"# API atslēga, kas atļauj programmatūrai darboties ar NewsAPI 
+apikey = "f9e757ccd2bc4d07b56cd2a79f4509cc"# API atslēga, kas atļauj programmatūrai darboties ar NewsAPI 
 #!!!ŠĪ IR BEZMAKSAS ATSLĒGA, TĀDĒĻ TIKAI VAR IK PĒC 24H IZMANTOT 100 PIEPRASĪJUMUS!!!
 newsapi = NewsApiClient(api_key = apikey)# Šī ir mainīgā deklarēšana, lai varētu izvilkt artikulu informāciju no NewsAPI
 
