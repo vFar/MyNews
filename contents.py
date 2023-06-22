@@ -33,6 +33,7 @@ var1 = IntVar()
 var2 = IntVar()
 var3 = IntVar()
 var4 = IntVar()
+sub_categories=[]
 titles= []
 articles = []
 descriptions=[]
@@ -68,6 +69,14 @@ def checkSavedTxt():
 
 #Šī funkcija nodrošina artikulu filtrēšanu
 def filterArticles(dpIndex, date_from_in, date_to_in, result, categories, article1):
+    global toggleDropdown
+    
+    if dpIndex is not None:
+      for i in range(0, 4):
+        if sub_categories[dpIndex][i].winfo_ismapped() == False:
+            sub_categories[dpIndex][i].grid_forget()
+            toggleDropdown = False
+     
     article1=random.randint(0,99)
     for i, button in enumerate(categories):# Šis cikls liek visām kategorijas pogām ieslēgties tālakai darbībai
             button.configure(state=NORMAL)
