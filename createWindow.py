@@ -7,7 +7,15 @@ import random
 from datetime import datetime, timedelta
 import os
 import sys
-from contents import resource_path
+
+#Funkcija domāta, lai palaistu programmu kā .exe failu ar ikonām
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 #Galvenie mainīgie priekš loga izveides(widgets, logs)
 root = None
@@ -54,7 +62,7 @@ def myNews():
 
     dropdown = Frame(root, width=700, height=700, bg="#205fc7", highlightbackground="black", highlightthickness=1)
 
-    from contents import navbar1,navbar2,slogan, logo, content, loadArticles, sub_categories, filterArticles, homeartLen, articles, checkSavedTxt, open_link, deleteArticle, randomArticles, filterInterval
+    from contents import navbar1,navbar2,slogan, logo, content, loadArticles, sub_categories, filterArticles, homeartLen, checkSavedTxt, open_link, deleteArticle, randomArticles, filterInterval
     # Importē dažādus mainīgos no contents.py faila
 
     article1 = random.randint(0, 99)

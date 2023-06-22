@@ -26,7 +26,7 @@ apikey = "8451a189a10f47e3a7b4f02d6624be3f"# API atslēga, kas atļauj programma
 newsapi = NewsApiClient(api_key = apikey)# Šī ir mainīgā deklarēšana, lai varētu izvilkt artikulu informāciju no NewsAPI
 
 from createWindow import root, dropdown, toggleDropdown,categories, date_from, date_to #No createWindow importē vajadzīgos mainīgos/funkcijas
-global articles, savedArr, homeart, homeartLen # Globālie mainīgie, lai pie tiem varētu piekļūt jeb kurš fails
+global savedArr, homeart, homeartLen # Globālie mainīgie, lai pie tiem varētu piekļūt jeb kurš fails
 
 #Tiek deklarēti tukši mainīgie, lai tos varētu atlasīt funkcijas
 var1 = IntVar()
@@ -302,11 +302,12 @@ def deleteArticle(delUrl):
   
   #Funkcija nodrošina ielādēt artikulas uz ekrāna
 def loadArticles(article1):
-  for  i in enumerate(homeart): #Cikls noņem no ekrāna iepriekšējo artikulu
-    articles[i].pack_forget()
+
+  for  i, article in enumerate(homeart):
+    articles[i].pack_forget() #Cikls noņem no ekrāna iepriekšējo artikulu
 
   # Ievieto nākošās vai jaunās artikulas informaciju ekrānā
-  saveBtn1 = Button(root, text="💾", fg="black", bg="white", font=('MS Sans Serif', 16), width=20, height=1, cursor="hand2", command=lambda: saveArticle(titles[article1].cget("text"), descriptions[article1].cget("text"), urls[article1]))
+  saveBtn1 = Button(root, text="💾", fg="black", bg="white", font=('MS Sans Serif', 16), width=20, height=1, command=lambda: saveArticle(titles[article1].cget("text"), descriptions[article1].cget("text"), urls[article1]))
   articles[article1].pack(pady=10)
   titles[article1].place(x=160, y=40)
   descriptions[article1].place(x=160, y=85)
