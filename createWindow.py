@@ -56,9 +56,8 @@ def myNews():
     root = Tk()
     root.title("MyNews | NewsAPI")
 
-    root.iconbitmap(default=resource_path("news.ico"))
-    root.resizable(0, 0)
 
+    root.resizable(0, 0)
 
 
     dropdown = Frame(root, width=700, height=700, bg="#205fc7", highlightbackground="black", highlightthickness=1)
