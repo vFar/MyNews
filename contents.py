@@ -25,7 +25,7 @@ apikey = "8451a189a10f47e3a7b4f02d6624be3f"# API atslēga, kas atļauj programma
 #!!!ŠĪ IR BEZMAKSAS ATSLĒGA, TĀDĒĻ TIKAI VAR IK PĒC 24H IZMANTOT 100 PIEPRASĪJUMUS!!!
 newsapi = NewsApiClient(api_key = apikey)# Šī ir mainīgā deklarēšana, lai varētu izvilkt artikulu informāciju no NewsAPI
 
-from createWindow import root, dropdown, toggleDropdown,categories, date_from, date_to #No createWindow importē vajadzīgos mainīgos/funkcijas
+from createWindow import root, dropdown, toggleDropdown,categories, date_from, date_to, article1 #No createWindow importē vajadzīgos mainīgos/funkcijas
 global savedArr, homeart, homeartLen # Globālie mainīgie, lai pie tiem varētu piekļūt jeb kurš fails
 
 #Tiek deklarēti tukši mainīgie, lai tos varētu atlasīt funkcijas
@@ -67,10 +67,10 @@ def checkSavedTxt():
     return savedArr
 
 #Šī funkcija nodrošina artikulu filtrēšanu
-def filterArticles(dpIndex, date_from_in, date_to_in, result):
-    for index, other_button in enumerate(categories):# Cikls ieslēdz kategoriju pogas
-        if index != 0:
-          other_button.config(state=NORMAL)# Ieslēdz pogu, tālākām darbībām
+def filterArticles(dpIndex, date_from_in, date_to_in, result, categories, article1):
+    article1=random.randint(0,99)
+    for i, button in enumerate(categories):# Šis cikls liek visām kategorijas pogām ieslēgties tālakai darbībai
+            button.configure(state=NORMAL)
 
     filterInterval(date_from_in, date_to_in, result) # Palaiž funkciju filterInterval, lai noskaidrotu vai lietotājs ir ievadījis intervāla informāciju
 
@@ -140,7 +140,7 @@ def filterArticles(dpIndex, date_from_in, date_to_in, result):
                 descriptions.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('MS Sans Serif', 13), bg="#205fc7", fg="white", text=article["description"])))
 
             # Palaiž funkciju, lai varētu ielādēt jaunās artikulas uz ekrāna
-              loadArticles(random.randint(0,99)) 
+              loadArticles(article1) 
 
           case 2:# Ja sub_cat garums  ir 2, tad nolasa artikulas divas sub_cat vērtības
               data = newsapi.get_everything(q=sub_cat[0]+" "+sub_cat[1], # Šī funkcija nolasa ziņas no NewsAPI
@@ -168,7 +168,7 @@ def filterArticles(dpIndex, date_from_in, date_to_in, result):
                 descriptions.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('MS Sans Serif', 13), bg="#205fc7", fg="white", text=article["description"])))
 
             # Palaiž funkciju, lai varētu ielādēt jaunās artikulas uz ekrāna
-              loadArticles(random.randint(0,99)) 
+              loadArticles(article1) 
 
           case 3:# Ja sub_cat garums  ir 3, tad nolasa artikulas trīs sub_cat vērtības
               data = newsapi.get_everything(q=sub_cat[0]+" "+sub_cat[1]+" "+sub_cat[2],# Šī funkcija nolasa ziņas no NewsAPI
@@ -196,7 +196,7 @@ def filterArticles(dpIndex, date_from_in, date_to_in, result):
                 descriptions.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('MS Sans Serif', 13), bg="#205fc7", fg="white", text=article["description"])))
 
             # Palaiž funkciju, lai varētu ielādēt jaunās artikulas uz ekrāna
-              loadArticles(random.randint(0,99)) 
+              loadArticles(article1) 
 
           case 4:# Ja sub_cat garums  ir 4, tad nolasa artikulas četras sub_cat vērtības
               data = newsapi.get_everything(q=sub_cat[0]+" "+sub_cat[1]+" "+sub_cat[2]+" "+sub_cat[3],# Šī funkcija nolasa ziņas no NewsAPI
@@ -224,7 +224,8 @@ def filterArticles(dpIndex, date_from_in, date_to_in, result):
                 descriptions.insert(i, (Label(articles[i], justify="left", wraplength=970, font=('MS Sans Serif', 13), bg="#205fc7", fg="white", text=article["description"])))
 
            # Palaiž funkciju, lai varētu ielādēt jaunās artikulas uz ekrāna
-              loadArticles(random.randint(0,99)) 
+              loadArticles(article1)
+              return article1
             
 #Funkcija nodrošina vai lietotājs ir ievadījis laika intervālu, atbilstoši situācijai norāda paziņojumu            
 def filterInterval(date_from_in, date_to_in, result):
@@ -274,12 +275,14 @@ def filterInterval(date_from_in, date_to_in, result):
         date_from=None
         date_to=None
         return
+    else:
+      result.config(text=date_from+"  -  "+date_to, relief='raised')
 
 # Funkcija nodrošina saglabāt artikulu saglabāšanas sarakstā
 def saveArticle(title, desc, url):
     savedArr = checkSavedTxt() # Nolasa vai saglabāšanas saraksta fails eksistē un nolasa visas vērtības un atbilstoši ieliek mainīgajā savedArr
 
-    for row in enumerate(savedArr): #Cikls pārbauda vai netiek saglabāts dublikāts, ja URL jau eksistē failā, neļauj saglabāt un izmet kļūdu
+    for index, row in enumerate(savedArr): #Cikls pārbauda vai netiek saglabāts dublikāts, ja URL jau eksistē failā, neļauj saglabāt un izmet kļūdu
         if row[2] == url:
             messagebox.showerror("Kļūda!", "Dublikātus saglabāt nav iespējams :(")
             return
@@ -302,7 +305,6 @@ def deleteArticle(delUrl):
   
   #Funkcija nodrošina ielādēt artikulas uz ekrāna
 def loadArticles(article1):
-
   for  i, article in enumerate(homeart):
     articles[i].pack_forget() #Cikls noņem no ekrāna iepriekšējo artikulu
 

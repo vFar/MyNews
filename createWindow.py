@@ -23,7 +23,7 @@ body = None
 content = None
 cWindow = None
 global article1, categories, toggleDropdown # Lai atlasītu mainīgos contents.py fails 
-article1 = random.randint(0,99) # Kad programma tiek palaista artikulas mainīgais tiek veidots nejaušā secibā
+article1 = 0
 toggleDropdown = False
 dropdownIndex = None
 categories = [] # Masīvs, lai pārraidītu kategorijas Front-End
@@ -65,7 +65,7 @@ def myNews():
     from contents import navbar1,navbar2,slogan, logo, content, loadArticles, sub_categories, filterArticles, homeartLen, checkSavedTxt, open_link, deleteArticle, randomArticles, filterInterval
     # Importē dažādus mainīgos no contents.py faila
 
-    article1 = random.randint(0, 99)
+    article1 = random.randint(0, 99)# Kad programma tiek palaista artikulas mainīgais tiek veidots nejaušā secibā
     navbar1.pack(anchor=N, fill="both", pady=0, padx=0)
     navbar2.pack(anchor=N, fill="both", pady=0, padx=0)
     checkSavedTxt() # Pārbauda vai ir jau iepriekš veidots fails savedList.txt, ja nav, tad izveido
@@ -166,7 +166,7 @@ def myNews():
             Button(navbar2, padx=20, text="Sports", cursor="hand2", fg="white", bg="#2367d9", font=('MS Sans Serif', 14), activeforeground="#123670", activebackground="#dedfe0", command=lambda:showDropdown(5)),
             Button(navbar2, padx=20, text="Tehnoloģijas", cursor="hand2", fg="white", bg="#2367d9", font=('MS Sans Serif', 14), activeforeground="#123670", activebackground="#dedfe0", command=lambda:showDropdown(6))]
     #Filtrēšanas pogas iestatīšana un ielikšana logā, kas palaiž funkciju filterArticles un paceļ pogas uz priekšu un atpakaļ virspusē
-    FilterBtn = Button(navbar2, cursor="hand2", text="⚙️", bg="#eee", font=('MS Sans Serif', 14), padx=25, activeforeground="#123670", activebackground="#dedfe0", command=lambda: [filterArticles(dropdownIndex, date_from_in, date_to_in, result),  nextBtn.tkraise(), backBtn.tkraise()])
+    FilterBtn = Button(navbar2, cursor="hand2", text="⚙️", bg="#eee", font=('MS Sans Serif', 14), padx=25, activeforeground="#123670", activebackground="#dedfe0", command=lambda: [filterArticles(dropdownIndex, date_from_in, date_to_in, result, categories,article1),  nextBtn.tkraise(), backBtn.tkraise(), RefreshArticleBtn.tkraise()])
     FilterBtn.grid(column=9, row=0, pady=10, padx=10)
 
     #Artikulu atsvaidzināšanas pogas iestatīšana un ielikšana logā, kas palaiž funkciju randomArticles un loadArticles, kā arī paceļ pogas uz priekšu un atpakaļ, pašu atsvaidzināšanas pogu virspusē
@@ -284,7 +284,7 @@ def myNews():
             savedListBox.bind("<Configure>", lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
 
 
-        for index in enumerate(savedArr): # Šis ir cikls, kas izprintē ekrānā saglabātās artikulas ekrānā, ciklā tiek piešķirti mainīgie, konteineris box kurā atrodas vienas saglabātās artikulas informācija
+        for index, obj in enumerate(savedArr): # Šis ir cikls, kas izprintē ekrānā saglabātās artikulas ekrānā, ciklā tiek piešķirti mainīgie, konteineris box kurā atrodas vienas saglabātās artikulas informācija
             box = Frame(savedListBox, bg="#2369db", cursor="hand2", borderwidth=2, relief='raised',
                         width=500)
             box.pack(ipadx=100, ipady=20, padx=220, pady=15, fill=BOTH, expand=True)
