@@ -14,6 +14,6 @@
 ### Programma tiek veidota pēc retro stila (Windows 98, XP u.tml.), kā arī programmatūra ir spējīga atlasīt rakstus tikai angļu valodā.
 
 ## Kā startēt programmu:
-'''
+```
 git clone https://github.com/vFar/MyNews.git
-'''
+```
