@@ -17,4 +17,4 @@
 ```
 git clone https://github.com/vFar/MyNews.git
 ```
-vai lejupielādēt **MyNewsSetup_1.0** failu
+vai lejupielādēt **MyNewsSetup_1.0** failu. Pēc klonēšanas, exe fails atrodas **dist** mapē.
