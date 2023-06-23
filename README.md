@@ -12,3 +12,8 @@
 - Iespēja saglabāt rakstus sarakstā;
 - Lietotājs ir spējīgs izdzēst rakstus no saraksta.
 ### Programma tiek veidota pēc retro stila (Windows 98, XP u.tml.), kā arī programmatūra ir spējīga atlasīt rakstus tikai angļu valodā.
+
+## Kā startēt programmu:
+'''
+git clone https://github.com/vFar/MyNews.git
+'''
