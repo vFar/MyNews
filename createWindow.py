@@ -53,7 +53,8 @@ def myNews():
 
     root = Tk() # Loga definēšana
     root.title("MyNews | NewsAPI")
-    root.iconbitmap(default=resource_path("news.ico"))
+
+
     root.resizable(0, 0)
     root.minsize(1280, 720) # Pievieno minimālās un maksimālās vērtības logam
     root.maxsize(1920, 1080)
