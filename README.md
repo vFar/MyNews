@@ -1,7 +1,7 @@
-# MyNews 
+# Projekts "Ziņu rakstu atlasītājs - MyNews"
 
-## Šis ir projekts MyNews, kas tiek veidots priekš programmēšanas tehniķa sesijas eksāmena Liepājas Valsts tehnikumā.
-### MyNews ir Python programmatūra, kurā var apskatīt jaunākās ziņas visapkārt pasaulei. Programmatūra sniedz iespēju filtrēt ziņas pēc savām vajadzībām, pārraidot artikulas ekrānā.
+## 3. kursa sesijas eksāmena darbs LVT moduļa "Programmēšanas tehniķis" ietvaros.
+### MyNews programmatūra tiek veidota Python valodā, kurā lietotājs var apskatīt jaunākās aktualitātes visā pasaulē. GitHub projekts sastāv no failiem, kuri nepieciešami, lai startētu MyNews programmu. Programma pielieto ziņu API pakalpojumu (https://newsapi.org)[https://newsapi.org] un nenes atbildību par ziņu rakstu autortiesību likumiem.
 ## Ko programmatūra MyNews spēj:
 - Apskatīt jaunākās ziņas mēneša intervālā;
 - Apskatīt ziņas detalizētāk pārlūka programmā;
