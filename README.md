@@ -1,13 +1,14 @@
 # Projekts "Ziņu rakstu atlasītājs - MyNews"
 
 ## 3. kursa sesijas eksāmena darbs LVT moduļa "Programmēšanas tehniķis" ietvaros.
-### MyNews programmatūra tiek veidota Python valodā, kurā lietotājs var apskatīt jaunākās aktualitātes visā pasaulē. GitHub projekts sastāv no failiem, kuri nepieciešami, lai startētu MyNews programmu. Programma pielieto ziņu API pakalpojumu https://newsapi.org un nenes atbildību par ziņu rakstu autortiesību likumiem.
-## Ko programmatūra MyNews spēj:
-- Apskatīt jaunākās ziņas mēneša intervālā;
-- Apskatīt ziņas detalizētāk pārlūka programmā;
-- Filtrēt ziņas pēc savām vajadzībām, dažādām kategorijām, sub-kategorijām
-- Filtrēt ziņas pēc sava laika intervāla(intervālu var mainīt tikai starp 30 dienu intervālu)
-- Dod iespēju nejaušā secībā atsvaidzināt artikulas
-- Dod iespēju saglabāt artikulas saglabāšanas sarakstā
-- Dod iespēju izdzēst artikulas no saglabāšanas saraksta
-### Programmatūra tiek veidota Retro stilā(Windows 98, Windows XP stilā), kā arī programmatūra atlasa artikulas tikai angļu valodā.
+## GitHub repo sastāv no failiem, kuri nepieciešami, lai startētu programmu. Repo tiek iekļauta PPS un PPA dokumentācija, kā arī MyNews setup fails, kuru izveidoja, lietojot InstallForge.
+### MyNews programmatūra tiek veidota Python valodā, kurā lietotājs var apskatīt jaunākās aktualitātes visā pasaulē. Programma pielieto ziņu API pakalpojumu https://newsapi.org un nenes atbildību par ziņu rakstu autortiesību likumiem.
+## MyNews funkcionalitāte:
+- Apskatīt jaunākās ziņas pēdējo 30 dienu laikā;
+- Iespēja apskatīt avota URL ar HYPERLINK funkciju;
+- Filtrēt ziņas pēc savu pašu izvēles (kategorijas, apakškategorijas);
+- Filtrēt ziņas pēc datuma (nav iespējams nolasīt ziņas, kuras vecākas par 30 dienām!);
+- Iespēja lietotājam atsvaidzināt ziņu rakstus;
+- Iespēja saglabāt rakstus sarakstā;
+- Lietotājs ir spējīgs izdzēst rakstus no saraksta.
+### Programma tiek veidota pēc retro stila (Windows 98, XP u.tml.), kā arī programmatūra ir spējīga atlasīt rakstus tikai angļu valodā.
