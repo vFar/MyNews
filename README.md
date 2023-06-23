@@ -17,3 +17,4 @@
 ```
 git clone https://github.com/vFar/MyNews.git
 ```
+vai lejupielādēt **MyNewsSetup_1.0** failu
